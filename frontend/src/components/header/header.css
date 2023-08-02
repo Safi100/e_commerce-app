@@ -1,0 +1,144 @@
+.header{
+    position: sticky;
+    top: 0;
+    background: #2a9d8f;
+    z-index: 555;
+}
+.header_top{
+    padding: 20px 3%;
+}
+.header_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+.header_top .logo{
+    font-size: 25px;
+    color: #fff;
+    display: flex;
+    gap: 20px;
+}
+.header_top .logo .mobile_account{
+    align-items: center;
+    display: none;
+}
+.header_top .search_bar{
+    display: flex;
+    align-items: center;
+    border-radius: 50px;    
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+.search_cont{
+    position: absolute;
+    width: 100%;
+    max-height: 300px;
+    top: 120%;
+    background: #fff;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+}
+.search_bar input{
+    padding: 12px 20px;
+    padding-right: 0;
+    width: 100%;
+    border-top-left-radius: 50px;  
+    border-bottom-left-radius: 50px;  
+    border: 0;
+    outline: none;
+    line-height: normal;
+    font-size: 12px;
+
+}
+.search_bar .search_btn{
+    background: #fff;
+    display: flex;
+    padding: 8px 10px;
+    transition: background .5s ;
+    cursor: pointer;
+    border-top-right-radius: 50px;  
+    border-bottom-right-radius: 50px;  
+}
+.search_bar .search_btn:hover{
+    background: #f4a261;
+}
+.search_btn > * {
+    transition: all .5s;
+}
+.search_bar .search_btn:hover.search_btn > * {
+    fill: #fff !important;
+}
+.header_top .account{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.header_top .cart{
+    display: flex;
+    position: relative;
+    cursor: pointer;
+}
+.cart .cartCount{
+    position: absolute;
+    width: max-content;
+    min-width: 22px;
+    line-height: 17px;
+    top: -9px;
+    right: -8px;
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #f4a261;
+    color: #fff;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+.header_top .User{
+    cursor: pointer;
+}
+.header_top .menu{
+    display: none;
+    cursor: pointer;
+    align-items: center;
+}
+.header_top .mobile_account{
+    display: flex;
+    gap: 10px;
+}
+@media screen  and (max-width: 768px){
+    .header_top .menu{
+        display: flex;
+    }
+    .header_top .User{
+        display: none;
+    }
+}
+@media screen and (max-width:675px) {
+    .header_top{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .header_top .logo{
+        justify-content: space-between;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .header_top .logo .mobile_account{
+        display: flex;
+    }
+    
+    .header_top .account{
+        display: none;
+    }
+    .header_top .search_bar{
+        max-width: unset;
+    }
+}
