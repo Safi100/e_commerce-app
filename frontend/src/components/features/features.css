@@ -1,0 +1,49 @@
+.feature{
+    padding: 30px 0;
+}
+.feature_container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+.featureCard{
+    width: 100%;
+    max-width: 260px;
+    /* min-width: 300px; */
+}
+.featureCard_header{
+    height: 250px;
+    border: 1px solid rgba(210,210,210,.4);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+.featureCard_header_image{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.featureCard .featureCard_title{
+    max-height: 86.4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    margin-bottom: 5px;
+}
+.featureCard .featureCard_price{
+    display: flex;
+    gap: 10px;
+    font-weight: bold;
+}
+.featureCard_price .original_price{
+    text-decoration: line-through;
+}
+@media screen and (max-width:1222px) {
+    .feature_container{
+        justify-content: center;
+        row-gap: 40px;
+    }
+}
