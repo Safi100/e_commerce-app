@@ -1,0 +1,53 @@
+.searchRes{
+    display: flex;
+    background: #f9f9f9;
+    padding: 10px;
+    cursor: pointer;
+}
+.searchRes .image{
+    width: 90px;
+    min-width: 90px;
+    height: 90px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid rgba(210,210,210,.56);
+}
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.searchRes_info{
+    padding: 10px;
+}
+.searchRes .title{
+    /* max-height: 26.4px; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}.searchRes_info .price{
+    display: flex;
+    gap: 5px;
+}
+.price .PriceToPay{
+    color: #9a0034;
+}
+.price .priceBeforeDiscount{
+    color: #bbb;
+    text-decoration: line-through;
+}
+.price .discount{
+    background: #f4a261;
+    border-radius: 40px;
+    padding: 0 5px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
