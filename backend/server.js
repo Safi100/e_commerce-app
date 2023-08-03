@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const ProductRoute = require('./routes/product')
 const AdvertisementRoute = require('./routes/advertisement')
+const categoryRoute = require('./routes/category')
 
 const app = express()
 
@@ -22,6 +23,7 @@ mongoose.connect('mongodb://localhost:27017/Ecommerce', {
 
 app.use('/product', ProductRoute)
 app.use('/advertisement', AdvertisementRoute)
+app.use('/category', categoryRoute)
 
 app.listen(8000, ()=>{
     console.log("app listining on port 3000");
