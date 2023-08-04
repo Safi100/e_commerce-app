@@ -40,6 +40,23 @@ li{
   object-fit: cover;
   object-position: center;
 }
+.slick-prev, .slick-next{
+  z-index: 10;
+}
+.slick-arrow::before{
+  color: #000 !important;
+}
+.slick-dots{
+  bottom: -50px !important; 
+}
+@media screen and (max-width: 480px) {
+  .slick-next{
+    right: 0 !important;
+  }
+  .slick-prev{
+    left: 0 !important;
+  }
+}
 /* .sliderr{
   height: 400px;
   overflow: hidden;
