@@ -34,3 +34,29 @@ module.exports.getNewArrivals = async (req, res) => {
         console.log(e);
     }
 }
+const items_per_page = 12;
+
+module.exports.getProducts = async (req, res) => {
+    const page = req.query.page || 1;
+
+    const {category} = req.params
+
+    const query = {}
+
+    // if (category === 'deals') {
+    //     query.discount = { $gte: 1};
+    // }else{
+    //     // query.category.CategoryName = { };
+    // }
+    try{
+        
+        const skip = (page - 1) * items_per_page // 
+        const count = await Product.countDocuments(query)
+        const products = await Product.find(query).limit(items_per_page).skip(skip)
+        const pageCount = count / items_per_page
+
+        res.status(200).json({products, count, PageCount:Math.ceil(pageCount) })
+    }catch(e){
+        console.log(e);
+    }
+}
