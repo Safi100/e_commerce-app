@@ -1,4 +1,5 @@
 const Product = require('../models/product')
+const Category = require('../models/category')
 
 module.exports.SearchProduct = async (req, res) => {
     try{
@@ -37,24 +38,24 @@ module.exports.getNewArrivals = async (req, res) => {
 const items_per_page = 12;
 
 module.exports.getProducts = async (req, res) => {
-    const page = req.query.page || 1;
-
-    const {category} = req.params
-
-    const query = {}
-
-    // if (category === 'deals') {
-    //     query.discount = { $gte: 1};
-    // }else{
-    //     // query.category.CategoryName = { };
-    // }
     try{
         
-        const skip = (page - 1) * items_per_page // 
-        const count = await Product.countDocuments(query)
-        const products = await Product.find(query).limit(items_per_page).skip(skip)
-        const pageCount = count / items_per_page
+        const page = req.query.page || 1;
+        const skip = (page - 1) * items_per_page 
 
+        const {category} = req.params
+
+        const query = {}
+        
+        if (category === 'deals') {
+            query['discount'] = { $gte: 1};
+        }else{
+            console.log(category);
+            query['category.CategoryName'] = category;
+        }
+        const count = await Product.countDocuments(query)
+        const products = await Product.find(query).limit(items_per_page).skip(skip).populate('category')
+        const pageCount = count / items_per_page
         res.status(200).json({products, count, PageCount:Math.ceil(pageCount) })
     }catch(e){
         console.log(e);
