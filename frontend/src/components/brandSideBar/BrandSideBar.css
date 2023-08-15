@@ -1,0 +1,23 @@
+.brandContainer{
+    background: #f7f7f7;
+    padding: 20px 0;
+    min-height: 100vh;
+    position: sticky;
+    right: 0;
+    top: 0;
+    width: max-content;
+    max-width: 260px;
+}
+.brandContainer h2, .brandContainer div{
+    padding: 0 40px;
+    padding-right: 20px;
+    text-align: right;
+}
+.brandContainer div{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+.brandContainer div input{
+    margin-left: 5px;
+}
