@@ -44,11 +44,11 @@ const Products = () => {
                         )
                         )}
             </div>
-            <div className='d-flex justify-content-center mt-5'>
+            {(pageCount > 1) && <div className='d-flex justify-content-center mt-5'>
             <Stack spacing={2}>
-                {pageCount > 0 && <Pagination count={pageCount} page={page} onChange={handleChange} color='primary' />}
+                <Pagination count={pageCount} page={page} onChange={handleChange} color='primary' />
             </Stack>
-            </div>
+            </div>}
         </div>
         <BrandSideBar products={data} brands={brands} brandSelected={brandSelected} setBrandSelected={setBrandSelected}/>
         </div>
