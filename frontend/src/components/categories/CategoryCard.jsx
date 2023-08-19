@@ -3,7 +3,7 @@ import React from 'react';
 const CategoryCard = ({category}) => {
     return (
         <div className='category_card'>
-            <a href={`/product/${category.CategoryName}`}>
+            <a href={`/product-category/${category.CategoryName}`}>
                 <div className='category_card_header'>
                     <img loading='lazy' className='category_card_header_image' src={category.categoryImage.url} alt={category.CategoryName} />
                 </div>
