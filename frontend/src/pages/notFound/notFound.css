@@ -1,0 +1,15 @@
+.notFound{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 50px 0;
+}
+.notfound_image{
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+.notFound .link{
+    color: #2a9d8f;
+}
