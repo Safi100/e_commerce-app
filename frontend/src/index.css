@@ -49,6 +49,14 @@ li{
 .slick-dots{
   bottom: -50px !important; 
 }
+.breadcrumb{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.breadcrumb a:hover{
+  text-decoration: underline;
+}
 @media screen and (max-width: 480px) {
   .slick-next{
     right: 0 !important;
