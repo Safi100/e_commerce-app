@@ -72,3 +72,19 @@ module.exports.getProducts = async (req, res) => {
         console.log(e);
     }
 }
+
+module.exports.productProfile = async (req, res) => {
+    try{
+        const id = req.params.id
+
+        const product = await Product.findById(id).populate('category')
+        if(product){
+            res.status(200).json(product)
+        }else{
+            res.status(400).json({error: "product not found"})
+        }
+    }catch(e){
+        res.status(500).json({error: e})
+        console.log(e);
+    }
+}
