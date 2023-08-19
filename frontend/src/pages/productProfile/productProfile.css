@@ -1,0 +1,109 @@
+.productProfile_container{
+    padding: 25px;
+}
+.productProfile_row{
+    display: flex;
+    max-width: 1700px;
+    gap: 30px;
+}
+.thumbnails{
+    display: flex;
+    flex-basis: 60%;
+    max-width: 540px;
+    gap:20px;
+    flex-direction: column;
+}
+.group__photo{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+.img__div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding:0 5px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+}
+.img__div img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+}
+.img__div.selected {
+    border-color: #000;
+}
+.img__div img.selected__inside, .img__div img.selected__inside:hover.selected__inside{
+    opacity: 0.3;
+}
+.selected__photo{
+    width: 100%;
+    height: 450px;
+    display: flex;
+    border: 1px solid #000;
+    padding: 10px;
+}
+.selected__photo img{
+    width: 100%;
+    object-fit: contain;
+}
+.product_info{
+    flex-basis: 100%;
+}
+.product_info .product_title{
+    font-size: 24px;
+}
+.product_description{
+    max-width: 800px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font-size: 14px;
+}
+.product_description .dot_list{
+    list-style: outside;
+}
+.product_info .price{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.ProductDiscount{
+    background: #CC0C39;
+    color: #fff;
+    top: 10px;
+    right: 10px;
+    padding: 3px 5px;
+    font-size: 14px;
+}
+.priceBefore{
+    font-size: 14px;
+}
+.originalPrice{
+    text-decoration: line-through;
+}
+.product_info .CartBtn{
+    background: #2a9d8f;
+    border: 0;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+    max-width: 400px;
+    cursor: pointer;
+}
+.product_info .CartBtn:hover{
+    opacity: 0.7;
+}
+.product_info .Stock{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.product_info .OutOfStockBtn{
+    opacity: 0.4;
+    cursor: no-drop;
+}
