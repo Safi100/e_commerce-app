@@ -1,5 +1,5 @@
 const express = require('express')
-const { SearchProduct, getFeatures, getNewArrivals, getProducts } = require('../controllers/product')
+const { SearchProduct, getFeatures, getNewArrivals, getProducts, productProfile } = require('../controllers/product')
 const router = express.Router({mergeParams: true})
 
 router.route('/search')
@@ -13,5 +13,8 @@ router.route('/new_arrival')
 
 router.route('/:category')
 .get(getProducts)
+
+router.route('/product-profile/:id')
+.get(productProfile)
 
 module.exports = router
