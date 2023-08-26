@@ -13,6 +13,9 @@ module.exports.CreateAccount = async (req, res) => {
         if(password !== confirmPassword){
             throw new Error('Password does not match');
         }
+        if(password.length < 6 && confirmPassword.length < 6){
+            throw new Error('Password too short');
+        }
         const emailUsedBefore  = await Customer.findOne({ email })
         if(emailUsedBefore ){
             throw new Error('Email already used');
