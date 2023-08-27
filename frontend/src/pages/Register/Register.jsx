@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 import './register.css'
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const Register = () => {
     const Navigate = useNavigate()
@@ -59,7 +61,7 @@ const Register = () => {
                   <input name='confirmPassword' onChange={handleInputChange} value={formData.confirmPassword} id='ConfirmPass' type="password" placeholder='Confirm your password' required/>
                 </div>
             </div>
-            {error && <p className='error'>{error}</p>}
+            {error &&  <div className='mt-4'><Alert severity="error">{error}!</Alert></div>}
             <div className='RegBtn_div'>
               <p><a href="/login">Have an account? Sign in</a></p>
               <button className='RegBtn' type='submit'>Regsiter</button>
