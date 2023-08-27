@@ -19,6 +19,7 @@
     transition: .5s ease opacity,.5s ease visibility,.5s ease transform;
     opacity: 0;
     z-index: 200;
+    min-width: 251px;
 }
 .mobile-nav_header{
     display: flex;

@@ -1,6 +1,4 @@
 .header{
-    position: sticky;
-    top: 0;
     background: #2a9d8f;
     z-index: 555;
 }
@@ -77,29 +75,6 @@
     display: flex;
     align-items: center;
     gap: 15px;
-}
-.header_top .cart{
-    display: flex;
-    position: relative;
-    cursor: pointer;
-}
-.cart .cartCount{
-    position: absolute;
-    width: max-content;
-    min-width: 22px;
-    line-height: 17px;
-    top: -9px;
-    right: -8px;
-    display: flex;
-    padding: 2px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background: #f4a261;
-    color: #fff;
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: 16px;
 }
 .header_top .User{
     cursor: pointer;

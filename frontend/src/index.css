@@ -65,6 +65,15 @@ li{
     left: 0 !important;
   }
 }
+.logReg_btn{
+  background: #f4a361;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: background-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.logReg_btn:hover{
+  background: #f4a361d3;
+}
 /* .sliderr{
   height: 400px;
   overflow: hidden;

@@ -6,12 +6,18 @@
     max-width: 1700px;
     gap: 30px;
 }
-.thumbnails{
-    display: flex;
+.thumbnails_cont{
     flex-basis: 60%;
     max-width: 540px;
+    position: relative;
+}
+.thumbnails{
+    display: flex;
     gap:20px;
+    width: 100%;
     flex-direction: column;
+    position: sticky;
+    top: 4px;
 }
 .group__photo{
     display: flex;
@@ -103,7 +109,30 @@
     font-size: 18px;
     margin-bottom: 10px;
 }
-.product_info .OutOfStockBtn{
-    opacity: 0.4;
-    cursor: no-drop;
+
+@media screen and (max-width: 1050px) {
+    .productProfile_row{
+        flex-direction: column;
+    }
+    .thumbnails{
+        max-width: 100%;
+        flex-direction: row;
+    }
+    .group__photo{
+        gap: 0;
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 550px) {
+    .selected__photo{
+        height: 350px;
+    }
+    .thumbnails{
+        max-width: 100%;
+        flex-direction: column;
+    }
+    .group__photo{
+        gap: 0;
+        flex-direction: row;
+    }
 }
