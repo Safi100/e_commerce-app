@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-
-const MobileNav = ({open, setOpen}) => {
+import {AuthContext} from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+const MobileNav = ({open, setOpen, user}) => {
+    const {dispatch} = React.useContext(AuthContext)
+    const Navigate = useNavigate()
+    const handleLogOut = (e) => {
+        dispatch({type: "LOGOUT"})
+        Navigate('/')
+    }
     return (
         <>
             {open && <div className='backdrop-overlay'></div>}
             <div className={`mobile-nav ${open && 'active'}`}>
                 <div>
+                    {!user &&
                     <div className='mobile-nav_header'>
                         <div className='mobile-nav_header_account'>
                             <div><a href="/register">Register</a></div>
@@ -16,6 +24,8 @@ const MobileNav = ({open, setOpen}) => {
                         </div>
                         <div onClick={()=> setOpen(false)}><CloseOutlinedIcon /></div>    
                     </div>
+                    }
+                    {user && <div onClick={()=> setOpen(false)}><CloseOutlinedIcon /></div>}    
                     <ul className='mobile-nav-ul'>
                         <li><a href="/">Home</a></li>
                         <li><a href="/">About us</a></li>
@@ -23,7 +33,7 @@ const MobileNav = ({open, setOpen}) => {
                         <li><a href="/product-category/deals">Deals</a></li>
                         <li><a href="/">Write a complaint</a></li>
                         <li><a href="/">My Orders</a></li>
-                        <li className='logout'><button><LogoutOutlinedIcon /> Logout</button></li>
+                        {user && <li className='logout'><button onClick={handleLogOut}><LogoutOutlinedIcon /> Logout</button></li>}
                     </ul>
                 </div>
             </div>
