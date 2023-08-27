@@ -1,5 +1,6 @@
 const Customer = require('../models/customer')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 module.exports.CreateAccount = async (req, res) => {
     try{
@@ -35,4 +36,39 @@ module.exports.CreateAccount = async (req, res) => {
     }catch(e){
         res.status(500).json({error: e.message})
     }
+}
+module.exports.Login = async (req, res) => {
+    const secret_key = process.env.SECRET_KEY
+    const email = req.body.email.toLowerCase().trim()
+    const password = req.body.password.trim()
+    try{
+        const customer = await Customer.findOne({email})
+        // Validation:
+        if(password.length < 6){
+            throw new Error('Password at least 6 character')
+        }
+        if(!customer){
+            throw new Error('Email or password incorrect')
+        }
+        const match = await bcrypt.compare(password, customer.password)
+        if(!match){
+            throw new Error('Email or password incorrect')
+        }
+        // Create token
+        const token = jwt.sign({ customer_id: customer._id }, secret_key, {
+            expiresIn:'2h'
+        })
+        res.cookie('accessToken', token, {
+            httpOnly: true
+        }).status(200).json({
+            first_name: customer.first_name,
+            last_name: customer.last_name,
+            token
+        })
+        
+    }catch(e){
+        res.status(401).json({error: e.message})
+        console.log(e);
+    }
+    
 }
