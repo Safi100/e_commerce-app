@@ -109,6 +109,22 @@
     font-size: 18px;
     margin-bottom: 10px;
 }
+.product_info .counter_div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.product_info .counter_control{
+    border: 1px solid #000;
+    /* font-size: 20px; */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
 
 @media screen and (max-width: 1050px) {
     .productProfile_row{
