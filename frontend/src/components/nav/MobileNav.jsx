@@ -32,7 +32,7 @@ const MobileNav = ({open, setOpen, user}) => {
                         <li><a href="/">How to order</a></li>
                         <li><a href="/product-category/deals">Deals</a></li>
                         <li><a href="/">Write a complaint</a></li>
-                        <li><a href="/">My Orders</a></li>
+                        {user && <li><a href="/">My Orders</a></li>}
                         {user && <li className='logout'><button onClick={handleLogOut}><LogoutOutlinedIcon /> Logout</button></li>}
                     </ul>
                 </div>
