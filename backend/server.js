@@ -13,6 +13,7 @@ const AdvertisementRoute = require('./routes/advertisement')
 const categoryRoute = require('./routes/category')
 const userRoute = require('./routes/customer')
 const cartRoute = require('./routes/cart')
+const reviewRoute = require('./routes/review')
 
 const Customer = require('./models/customer')
 const Product = require('./models/product')
@@ -36,6 +37,7 @@ app.use('/advertisement', AdvertisementRoute)
 app.use('/category', categoryRoute)
 app.use('/user', userRoute)
 app.use('/cart', cartRoute)
+app.use('/review', reviewRoute)
 
 app.listen(8000, ()=>{
     console.log("app listining on port 8000");
