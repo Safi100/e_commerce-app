@@ -77,7 +77,7 @@ module.exports.productProfile = async (req, res) => {
     try{
         const id = req.params.id
 
-        const product = await Product.findById(id).populate('category')
+        const product = await Product.findById(id).populate('category').populate({path:'reviews', populate:{path:'author'}})
         if(product){
             res.status(200).json(product)
         }else{
