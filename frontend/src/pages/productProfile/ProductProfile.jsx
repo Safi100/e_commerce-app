@@ -1,30 +1,45 @@
-import {React, useEffect, useState} from 'react';
+import {React, useEffect, useState, useContext} from 'react';
 import {useParams} from 'react-router-dom'
 import Axios from 'axios';
 import './productProfile.css'
 import NoImage from '../../assets/image-placeholder.png'
-// import NoImagee from '../../assets'
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
+import Reviews from '../../components/reviews/Reviews';
+import {AuthContext} from '../../context/AuthContext'
 
+// import NoImagee from '../../assets'
 const ProductProfile = () => {
+    const {user} = useContext(AuthContext)
     const { id } = useParams()
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [product, setProduct] = useState({})
-
+    const [quantity, setQuantity] = useState(1)
     useEffect(()=> {
         Axios.get(`http://localhost:8000/product/product-profile/${id}`)
         .then(res => {
-            console.log(res);
             setProduct(res.data)
-            console.log(res.data);
         })
         .catch(err => {
             console.log(err)
         })
     }, [])
 
-    
+    const HandleSubmit = (e) => {
+        e.preventDefault()
+        if(!product.still_available){
+            return 
+        }
+        Axios.post(`http://localhost:8000/cart/addToCart?quantity=${quantity}`, {productId: id} , {
+            headers: {authorization: "Bearer " + user.token}
+        })
+        .catch(err => {
+            console.log(err);
+            setError(err.response.data.error)
+        })
+    }
     return (
         <div className='wrapper py-3'>
             <p className='breadcrumb'>
@@ -33,6 +48,7 @@ const ProductProfile = () => {
                 <a href={`/product-category/${product.category?.CategoryName}`}>{product.category?.CategoryName}</a>
             </p>
             <div className='productProfile_row'>
+                <div className='thumbnails_cont'>
                 <div className="thumbnails">
                     <div className="selected__photo">
                     {product.images?.length > 0 ? 
@@ -47,7 +63,9 @@ const ProductProfile = () => {
                         ))}
                     </div>
                 </div>
-                <form className="product_info" onSubmit={console.log(this)}>
+                
+                </div>
+                <form className="product_info" onSubmit={HandleSubmit}>
                     <h2 className='product_title'>{product.title}</h2>
                     <p>stars, {product.reviews?.length}</p>
                     <div className='mt-2'>
@@ -58,9 +76,35 @@ const ProductProfile = () => {
                         {(product.price !== product.priceToPay ) ? <p className='priceBefore text-secondary'>List price: <span className='originalPrice'>${product.price}</span></p> : ""}
                     </div>
                     {product.still_available ? <div className='Stock text-success'>In Stock</div> : <div className='Stock text-danger'>Out of Stock</div>}
-                    <button onClick={()=> console.log(this)} disabled={product.still_available}  className={`CartBtn ${!product.still_available && 'OutOfStockBtn'}`}>Add to Cart</button>
+                    {user && 
+                        product.still_available && 
+                            <>
+                                <div className='counter_div'>
+                                    <span className='counter_control' onClick={()=> quantity < 10 && setQuantity(quantity+1)}><AddOutlinedIcon /></span>
+                                    <span>{quantity}</span>
+                                    <span className='counter_control' onClick={()=> quantity > 1 && setQuantity(quantity-1)}><RemoveOutlinedIcon /></span>
+                                </div>
+                                <button type='submit' disabled={!product.still_available} className="CartBtn" >Add to Cart</button>
+                            </>
+                                            
+                    }
+                    <hr />
+                    <div>
+                        <h3 className='mb-3'>Product description</h3>
+                        <div className='product_description' >
+                        {product.description?.split(/\r\n|\n/).map((line, index) => (
+                        <div className='d-flex mb-2' key={index}>
+                            <li className='dot_list'></li>
+                            <>{line}</>
+                            </div>
+                        ))}
+                        </div>
+                    </div>
                 </form>
+                <div>
+                </div>
             </div>
+            <Reviews user={user} reviews={product.reviews} />
         </div>
     );
 }

@@ -5,6 +5,7 @@
     display: flex;
     max-width: 1700px;
     gap: 30px;
+    padding-bottom: 30px;
 }
 .thumbnails_cont{
     flex-basis: 60%;
