@@ -5,7 +5,6 @@ const Product = require('../models/product')
 module.exports.CreateReview = async (req, res) => {
     try{
         const {title, rating, body, productID} = req.body
-
         const customer = await Customer.findById(req.user.customer_id)
         const product = await Product.findById(productID)
         
@@ -29,6 +28,20 @@ module.exports.CreateReview = async (req, res) => {
     
         res.json(req.body)
     }catch(e){
-        res.status(500).json({error: e.error})
+        console.log(e);
+        res.status(500).json({ error: e.message }); // Sending error message in the response
+    }
+}
+
+module.exports.deleteReview = async (req, res) => {
+    try{
+        const reviewId = req.params.id
+        const DeletedReview = await Review.findByIdAndDelete(reviewId)
+        if(!DeletedReview) throw new Error("Review not found!")
+        await Product.findByIdAndUpdate(DeletedReview.product, {$pull: { reviews: reviewId }})
+        await Customer.findByIdAndUpdate(req.user.customer_id , {$pull: { reviews: reviewId }})
+        res.json(DeletedReview)
+    }catch(e){
+        res.status(400).json({error: e.message})
     }
 }
