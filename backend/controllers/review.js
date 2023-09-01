@@ -1,6 +1,7 @@
 const Review = require('../models/review')
 const Customer = require('../models/customer')
 const Product = require('../models/product')
+const {cloudinary} = require('../cloudinary/index')
 
 module.exports.CreateReview = async (req, res) => {
     try{
@@ -10,11 +11,12 @@ module.exports.CreateReview = async (req, res) => {
         
         if(!customer) throw new Error('Customer not found')
         if(!product) throw new Error('Product not found')
-
+        const image = req.file ? { url: req.file.path, filename: req.file.filename } : null;
         const newReview = new Review({
             title: title.trim(),
             rating: rating,
             body: body.trim(),
+            image,
             author: req.user.customer_id,
             product: productID
         })
@@ -26,10 +28,9 @@ module.exports.CreateReview = async (req, res) => {
         await customer.save()
         await product.save()
     
-        res.json(req.body)
+        res.status(200).json({newReview})
     }catch(e){
-        console.log(e);
-        res.status(500).json({ error: e.message }); // Sending error message in the response
+        res.status(500).json({ error: e.message })
     }
 }
 
@@ -38,9 +39,12 @@ module.exports.deleteReview = async (req, res) => {
         const reviewId = req.params.id
         const DeletedReview = await Review.findByIdAndDelete(reviewId)
         if(!DeletedReview) throw new Error("Review not found!")
+
+        await cloudinary.uploader.destroy(DeletedReview.image.filename)
+        
         await Product.findByIdAndUpdate(DeletedReview.product, {$pull: { reviews: reviewId }})
         await Customer.findByIdAndUpdate(req.user.customer_id , {$pull: { reviews: reviewId }})
-        res.json(DeletedReview)
+        res.status(200).json(DeletedReview)
     }catch(e){
         res.status(400).json({error: e.message})
     }
