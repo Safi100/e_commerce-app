@@ -61,6 +61,7 @@ module.exports.Login = async (req, res) => {
         res.cookie('accessToken', token, {
             httpOnly: true
         }).status(200).json({
+            id: customer._id,
             first_name: customer.first_name,
             last_name: customer.last_name,
             token
