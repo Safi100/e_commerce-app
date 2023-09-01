@@ -17,6 +17,7 @@ const ProductProfile = () => {
     const [error, setError] = useState('')
     const [product, setProduct] = useState({})
     const [quantity, setQuantity] = useState(1)
+    const [reFetch, setRefetch] = useState(false)
     useEffect(()=> {
         Axios.get(`http://localhost:8000/product/product-profile/${id}`)
         .then(res => {
@@ -25,7 +26,7 @@ const ProductProfile = () => {
         .catch(err => {
             console.log(err)
         })
-    }, [])
+    }, [reFetch])
 
     const HandleSubmit = (e) => {
         e.preventDefault()
@@ -104,7 +105,7 @@ const ProductProfile = () => {
                 <div>
                 </div>
             </div>
-            <Reviews user={user} reviews={product.reviews} />
+            <Reviews user={user} reviews={product.reviews} productID={id} reFetch={reFetch} setRefetch={setRefetch} />
         </div>
     );
 }
