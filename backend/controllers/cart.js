@@ -4,9 +4,9 @@ const Product = require('../models/product')
 module.exports.addToCart = async (req, res) => {
     try{
         const quantity = req.query.quantity || 1
-        const {productId} = req.body
+        const {productID} = req.body
         const customer = await Customer.findById(req.user.customer_id).populate('cart.items.product').exec();
-        const productt = await Product.findById(productId);
+        const productt = await Product.findById(productID);
         if(!productt){
             throw new Error('Product not found')
         }
@@ -27,5 +27,22 @@ module.exports.addToCart = async (req, res) => {
     }catch(e){
         res.status(500).json({error : e.message})
         console.log(e);
+    }
+}
+module.exports.DeleteFromCart = async (req, res) => {
+    const quantity = req.query.quantity || 1
+    const {productID} = req.body
+    const customer = await Customer.findById(req.user.customer_id).populate('cart.items.product').exec();
+}
+module.exports.getCart = async (req, res) => {
+    try{
+        const customer = await Customer.findById(req.user.customer_id).populate('cart.items.product').exec()
+        if(!customer){
+            throw new Error('Customer not found')
+        }
+        res.status(200).json(customer.cart)
+    }catch(e){
+        res.status(500).json({error : e.message})
+        console.log(e)
     }
 }
