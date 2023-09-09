@@ -56,7 +56,7 @@ module.exports.Login = async (req, res) => {
         }
         // Create token
         const token = jwt.sign({ customer_id: customer._id }, secret_key, {
-            expiresIn:'2h'
+            expiresIn:'30d'
         })
         res.cookie('accessToken', token, {
             httpOnly: true
