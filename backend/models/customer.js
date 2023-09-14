@@ -4,12 +4,11 @@ const Schema = mongoose.Schema
 const cartItemSchema = new mongoose.Schema({
     product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product', // Assuming you have a 'Product' model
+      ref: 'Product',
       required: true,
     },
     quantity: {
       type: Number,
-      max: 10,
       required: true    
     },
   }, {_id: false}, {__v: false});
@@ -20,6 +19,30 @@ const cartItemSchema = new mongoose.Schema({
       type: Number,
       required: true,
       default: 0,
+      min: 0
+    },
+  }, {_id: false}, {__v:false});
+
+  const addressSchema = new Schema({
+    recipient_name: {
+      type: String,
+      required: true,
+    },
+    street_address: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    postal_code: {
+      type: String,
+      required: true,
+    },
+    phone_number: {
+      type: String,
+      required: true,
     },
   }, {_id: false}, {__v:false});
 
@@ -45,10 +68,14 @@ const CustomerSchema = new Schema({
         type: cartSchema,
         default: { items: [], total: 0 }, // Initialize cart with empty items array and total of 0
     },
+    address: {
+      type: addressSchema,
+      default: null,
+    },
     reviews:[{
-            type: Schema.Types.ObjectId,
-            ref: 'Review'
-        }]
+        type: Schema.Types.ObjectId,
+        ref: 'Review'
+    }]
     
 }, {timestamps: true})
 
