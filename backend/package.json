@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.3.0",
+    "@stripe/stripe-js": "^2.1.5",
     "bcrypt": "^5.1.1",
     "cloudinary": "^1.40.0",
     "cookie": "^0.5.0",
@@ -16,6 +18,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.0.1",
     "react-router": "^6.14.2",
-    "react-router-dom": "^6.14.2"
+    "react-router-dom": "^6.14.2",
+    "stripe": "^13.5.0"
   }
 }
