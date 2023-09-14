@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './header.css'
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
@@ -12,6 +12,8 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MobileNav from '../nav/MobileNav';
 import AccountMenu from '../../components/AccountMenu'
 import {AuthContext} from '../../context/AuthContext'
+import Cart from '../cart/Cart';
+import { CartContext } from '../../context/Cart';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -23,10 +25,13 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Header = () => {
-    const {user} = React.useContext(AuthContext)
+    const cartContext = useContext(CartContext).cart;
+    const {user} = useContext(AuthContext)
     const [search, setSearch] = useState('')
     const [products, setProducts] = useState([])
     const [open, setOpen] = useState(false)
+    const [openCart, setOpenCart] = useState(false)
+
     const handleSearchInput = async (e) => {
         e.preventDefault()
         const text = e.target.value.trimStart()
@@ -50,7 +55,7 @@ const Header = () => {
                     {user &&
                     <span className='cart'>
                     <IconButton aria-label="cart">
-                        <StyledBadge badgeContent={4} color="secondary" max={9}>
+                        <StyledBadge badgeContent={cartContext.cartQuantity} color="secondary" max={9}>
                             <ShoppingCartIcon style={{color:'#fff'}}/>
                         </StyledBadge>
                     </IconButton>
@@ -61,7 +66,7 @@ const Header = () => {
                 </div>
                 <div className="search_bar">
                     <input type="text" value={search} onChange={handleSearchInput} placeholder='Search for products'/>
-                    <div onClick={()=> console.log("clicked")} className='search_btn'><SearchIcon /></div>
+                    <div className='search_btn'><SearchIcon /></div>
                     {(search.length >= 3) && <div className='search_cont'>
                         {products.length === 0  && <h3 className='text-danger text-center my-2'>No result found</h3>}
                         {products.map(product => (
@@ -71,9 +76,9 @@ const Header = () => {
                 </div>
                 <div className="account">
                 {user &&
-                    <span className='cart'>
+                    <span className='cart' onClick={()=> setOpenCart(true)} >
                     <IconButton aria-label="cart">
-                        <StyledBadge badgeContent={4} color="secondary" max={9}>
+                        <StyledBadge badgeContent={cartContext.cartQuantity} color="secondary" max={9}>
                             <ShoppingCartIcon style={{color:'#fff'}}/>
                         </StyledBadge>
                     </IconButton>
@@ -90,7 +95,8 @@ const Header = () => {
                 </div>
             </div>
             <Nav user={user} />
-            <MobileNav open={open} setOpen={setOpen} user={user} />
+            <MobileNav open={open} setOpen={setOpen} user={user}/>
+            {user && <Cart cart={cartContext} setOpenCart={setOpenCart} openCart={openCart} />}
         </div>
     );
 }
