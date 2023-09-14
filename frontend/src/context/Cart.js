@@ -34,7 +34,7 @@ export const CartContextProvider = ({ children }) => {
   };
 
   // Function to add an item to the cart
-  const addToCart = (productID, quantity) => {
+  const addToCart = (productID, quantity=1 ) => {
     if(user && user.token) {
       Axios.post(`http://localhost:8000/cart/addToCart?quantity=${quantity}`, {productID} , {
           headers: {authorization: "Bearer " + user.token}
@@ -51,8 +51,20 @@ export const CartContextProvider = ({ children }) => {
     }
   };
 
+  const removeFromCart = (productID, quantity=1 ) => {
+    Axios.delete(`http://localhost:8000/cart/deleteFromCart?quantity=${quantity}`, { data: { productID }, 
+      headers: {authorization: "Bearer " + user.token}
+    })
+    .then(() => {
+      // After adding the item to the cart, refetch the cart data to update the cart state
+      fetchCartData();
+    })
+    .catch(err => {
+        console.log(err);
+    })
+  }
   // Pass both cart state and addToCart function in the context value
-  const contextValue = { cart, addToCart };
+  const contextValue = { cart, addToCart, removeFromCart };
 
   return (
     <CartContext.Provider value={contextValue}>
