@@ -1,0 +1,69 @@
+.profileComponent{
+    background: #f4f6f8;
+}
+.customerProfile{
+    padding: 30px 0;
+}
+.customerProfile .list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+}
+.customerProfile .list li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.customerProfile .list li.selected {
+    background: #d1e4e27e;
+    color: #0fa08f;
+}
+.SelectedComponent{
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+/* Address component */
+.address-form-container .address-form-container {
+    /* max-width: 400px; */
+    /* margin: 0 auto; */
+}
+.address-form-container .form-group {
+  margin-bottom: 15px;
+}
+.address-form-container label {
+  display: block;
+  font-weight: bold;
+}
+.address-form-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.address-form-container button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.address-form-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+.address-form-container .locked{
+  cursor: pointer;
+  color: blue;
+}
+.address-form-container input:disabled{
+  background-color: #f2f2f2; /* Light gray background color */
+  color: #888; /* Slightly muted text color */
+}
