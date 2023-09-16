@@ -13,7 +13,7 @@ import MobileNav from '../nav/MobileNav';
 import AccountMenu from '../../components/AccountMenu'
 import {AuthContext} from '../../context/AuthContext'
 import Cart from '../cart/Cart';
-import { CartContext } from '../../context/Cart';
+import { CartContext } from '../../context/CartContext';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
