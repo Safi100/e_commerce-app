@@ -26,43 +26,43 @@ const cartItemSchema = new mongoose.Schema({
   const addressSchema = new Schema({
     recipient_name: {
       type: String,
-      required: true,
+      required: [true, 'Recipient name is required!']
     },
     street_address: {
       type: String,
-      required: true,
+      required: [true, 'Street address is required!']
     },
     city: {
       type: String,
-      required: true,
+      required: [true, 'City is required!']
     },
     postal_code: {
       type: String,
-      required: true,
+      required: [true, 'Postal code is required!']
     },
     phone_number: {
       type: String,
-      required: true,
+      required: [true, 'Phone number is required!']
     },
   }, {_id: false}, {__v:false});
 
 const CustomerSchema = new Schema({
     first_name: {
         type: String,
-        required: true
+        required: [true, 'First name is required!']
     },
     last_name: {
         type: String,
-        required: true
+        required: [true, 'Last name is required!']
     },
     email: {
         type: String,
-        required: true,
+        required: [true, 'Email is required!'],
         unique: true
     },
     password: {
         type: String,
-        required: true,
+        required: [true, 'Password is required'],
     },
     cart: {
         type: cartSchema,
