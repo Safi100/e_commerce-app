@@ -71,5 +71,35 @@ module.exports.Login = async (req, res) => {
         res.status(401).json({error: e.message})
         console.log(e);
     }
-    
+}
+module.exports.renderProfile = async (req, res) => {
+    try{
+        const customer = await Customer.findById(req.user.customer_id).populate('reviews')
+        if(!customer) throw new Error('Customer not found')
+        // Send customer data without password
+        const { password, ...CUSTOMER } = customer.toObject();
+        res.status(200).json(CUSTOMER)
+    }catch(e){
+        res.status(404).json({error: e.message})
+        console.log(e);
+    }
+}
+module.exports.editAddress = async (req, res) => {
+    try{
+        const customer = await Customer.findByIdAndUpdate(req.user.customer_id)
+        if(!customer) throw new Error('Customer not found')
+        // Update the address fields
+        customer.address = {
+            phone_number: req.body.phone_number.trim(),
+            street_address: req.body.street_address.trim(),
+            city: req.body.city.trim(),
+            postal_code: req.body.postal_code.trim(),
+            recipient_name: req.body.recipient_name.trim(),
+        }
+        await customer.save()
+        res.status(200).json({success: true, message: 'Your Address updated successfully'})
+    }catch(e){
+        res.status(404).json({error: e.message})
+        console.log(e);
+    }   
 }

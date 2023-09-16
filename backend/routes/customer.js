@@ -1,6 +1,12 @@
 const express = require('express')
-const { CreateAccount, Login } = require('../controllers/customer')
+const { CreateAccount, Login, renderProfile, editAddress } = require('../controllers/customer')
 const router = express.Router({mergeParams: true})
+const { authorization } = require('../middleware')
+
+router.get('/', authorization, renderProfile)
+
+router.route('/editAddress')
+.put(authorization, editAddress)
 
 router.route('/register')
 .post(CreateAccount)
