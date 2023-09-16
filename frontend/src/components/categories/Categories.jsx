@@ -23,7 +23,6 @@ const Categories = () => {
         <>
         {data.length > 0 && 
             <section className='categories'>
-                {console.log(data)}
                 <div className="wrapper">
                     <div className="categories_container">
                         {data.map(category => (

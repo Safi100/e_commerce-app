@@ -24,7 +24,7 @@ function stringAvatar(name) {
 
 export default function AccountMenu() {
   const {user, dispatch} = React.useContext(AuthContext)
-  const Navigate = useNavigate()
+  const Navigate = useNavigate() 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const HandleLogOut = () => {
     // todo : fix navigate
@@ -88,9 +88,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <a href="/my-account">
         <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>
+        </a>
         <Divider />
         <MenuItem onClick={handleClose && HandleLogOut} >
           <ListItemIcon>
