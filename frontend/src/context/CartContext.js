@@ -8,7 +8,7 @@ export const CartContext = createContext([]);
 export const CartContextProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [cart, setCart] = useState([]);
-  
+
   useEffect(() => {
     if(user && user.token) {
       fetchCartData(); // Fetch cart data initially
