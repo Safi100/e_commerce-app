@@ -2,7 +2,7 @@ import React from 'react';
 import './searchResult.css'
 const SearchResult = ({product}) => {
     return (
-        <a className='searchRes'>
+        <a className='searchRes' href={`/product-profile/${product._id}`}>
             <div className='image'><img loading='lazy' src={product.images[0].url} alt={product.title} /></div>
             <div className='searchRes_info'>
                 <p className='title'>{product.title}</p>
