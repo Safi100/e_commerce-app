@@ -7,8 +7,7 @@ const Nav = ({user}) => {
             <li><a href="/">About us</a></li>
             <li><a href="/">How to order</a></li>
             <li><a href="/product-category/deals">Deals</a></li>
-            {user && <li><a href="/">Write a complaint</a></li>}
-            {user && <li><a href="/">My Orders</a></li>}
+            {user && <li><a href="/my-account">My Account</a></li>}
         </ul>
     );
 }
