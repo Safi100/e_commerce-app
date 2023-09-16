@@ -7,6 +7,7 @@ import NotFound from "./pages/notFound/NotFound";
 import ProductProfile from "./pages/productProfile/ProductProfile";
 import Footer from "./components/footer/Footer";
 import Login from "./pages/login/Login";
+import CustomerProfile from "./pages/customer/CustomerProfile";
 
 function App() {
   const path = useLocation()
@@ -18,6 +19,7 @@ function App() {
         <Route exact path='/' element={<Index/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/my-account' element={<CustomerProfile />} />
         <Route path='/product-category/:category' element={<Products />} />
         <Route path='/product-profile/:id' element={<ProductProfile />} />
         <Route path='*' element={<NotFound/>} />
