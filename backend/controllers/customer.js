@@ -74,7 +74,7 @@ module.exports.Login = async (req, res) => {
 }
 module.exports.renderProfile = async (req, res) => {
     try{
-        const customer = await Customer.findById(req.user.customer_id).populate('reviews')
+        const customer = await Customer.findById(req.user.customer_id).populate({path:'reviews', populate:{path: 'product', populate: ['brand', 'category']}})
         if(!customer) throw new Error('Customer not found')
         // Send customer data without password
         const { password, ...CUSTOMER } = customer.toObject();
