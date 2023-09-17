@@ -17,6 +17,12 @@
   }
   .reviews{
     flex: 1.2;
+    margin-bottom: 30px;
+  }
+  .reviews_container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
   .review-header {
     font-size: 24px;
@@ -68,13 +74,35 @@
   .review-card{
     background: #e5e5e5;
     padding: 20px;
-    margin-bottom: 30px;
-    
   }
   .review-card .review-title{
     font-size: 20px;
   }
-  .review-card .review-image{
+  .review-card .review_image{
     width: 100%;
     margin-bottom: 10px;
   }
+  .review-card .read_more_btn{
+    cursor: pointer;
+    display: flex;
+    width: max-content;
+    font-size: 14px;
+    align-items: center;
+    margin-top: 10px;
+}
+.review-card .read_more_btn:hover .read_more{
+    color: red;
+    text-decoration: underline;
+}
+.review-card .read_more{
+    color: #0d6efd;
+}
+.review-card .cut{
+    height: 70px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+.review-card .review_image{
+    width: 100%;
+}
