@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {CustomerContext} from '../../../context/CustomerContext';
