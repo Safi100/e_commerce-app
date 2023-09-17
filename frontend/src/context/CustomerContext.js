@@ -40,9 +40,20 @@ export const CustomerContextProvider = ({ children }) => {
       console.error("Error editing address:", err); 
    })
   }
+  const deleteReview = (review) => {
+    console.log(review);
+    Axios.delete(`http://localhost:8000/review/deleteReview/${review._id}`, {
+        headers: {authorization: "Bearer " + user.token}
+    })
+    .then(res => {
+        if(res.status === 200){
+          fetchCustomerData()
+        }
+    })
+}
 
   // Return the context value
-  const contextValue = { customer, editAddress };
+  const contextValue = { customer, editAddress, deleteReview };
 
   return (
     <CustomerContext.Provider value={contextValue}>
