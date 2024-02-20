@@ -1,4 +1,4 @@
-import {React, useEffect, useState, useContext} from 'react';
+import {React, useEffect, useState, useContext, useCallback} from 'react';
 import {useParams} from 'react-router-dom'
 import Axios from 'axios';
 import './productProfile.css'
@@ -7,7 +7,7 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import Reviews from '../../components/reviews/Reviews';
 import {AuthContext} from '../../context/AuthContext'
-
+import { CartContext } from '../../context/CartContext';
 // import NoImagee from '../../assets'
 const ProductProfile = () => {
     const {user} = useContext(AuthContext)
@@ -17,7 +17,9 @@ const ProductProfile = () => {
     const [error, setError] = useState('')
     const [product, setProduct] = useState({})
     const [quantity, setQuantity] = useState(1)
-    const [reFetch, setRefetch] = useState(false)
+    const cart = useContext(CartContext)
+    // const [reFetch, setRefetch] = useState(false)
+
     useEffect(()=> {
         Axios.get(`http://localhost:8000/product/product-profile/${id}`)
         .then(res => {
@@ -26,20 +28,12 @@ const ProductProfile = () => {
         .catch(err => {
             console.log(err)
         })
-    }, [reFetch])
+    }, [])
 
     const HandleSubmit = (e) => {
         e.preventDefault()
-        if(!product.still_available){
-            return 
-        }
-        Axios.post(`http://localhost:8000/cart/addToCart?quantity=${quantity}`, {productId: id} , {
-            headers: {authorization: "Bearer " + user.token}
-        })
-        .catch(err => {
-            console.log(err);
-            setError(err.response.data.error)
-        })
+        cart.addToCart(id, quantity)
+
     }
     return (
         <div className='wrapper py-3'>
@@ -105,7 +99,7 @@ const ProductProfile = () => {
                 <div>
                 </div>
             </div>
-            <Reviews user={user} reviews={product.reviews} productID={id} reFetch={reFetch} setRefetch={setRefetch} />
+            <Reviews user={user} setProduct={setProduct} product={product} productID={id} />
         </div>
     );
 }

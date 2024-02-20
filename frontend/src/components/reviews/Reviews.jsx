@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Axios from 'axios'
 
-const Reviews = ({user, reviews, productID, setRefetch, reFetch}) => {
+const Reviews = ({user, product, setProduct, productID}) => {
     const [rating, setRating] = useState(0)
     const [selectedImage, setSelectedImage] = useState('');
     const [selectedImageDisplay, setSelectedImageDisplay] = useState('');
@@ -16,8 +16,6 @@ const Reviews = ({user, reviews, productID, setRefetch, reFetch}) => {
         body: '',
     })
     
-    useEffect(()=> setRefetch(false))
-
     const handleImageChange = (e) => {
         setSelectedImage(e.target.files[0])
         if(e.target.files.length !== 0){
@@ -61,6 +59,8 @@ const Reviews = ({user, reviews, productID, setRefetch, reFetch}) => {
                 setSelectedImageDisplay('')
                 setError('')
                 setSuccess('Review added successfully')
+                console.log(res);
+                setProduct({...product, reviews: [...product.reviews, res.data.newReview]})
             }
         })
         .catch((err) => {
@@ -70,7 +70,6 @@ const Reviews = ({user, reviews, productID, setRefetch, reFetch}) => {
     }
     return (
         <div className='review_dev mt-5'>
-            {console.log(reviews)}
             {user &&  <form className='review-form-container__parent' onSubmit={AddReview}>
                 <div className="review-form-container">
                     <h2 className="review-header">Write a Review</h2>
@@ -99,13 +98,13 @@ const Reviews = ({user, reviews, productID, setRefetch, reFetch}) => {
                     <button className="submit-button">Submit Review</button>
                 </div>
             </form>}
-            {reviews?.length > 0 && <div className='reviews'>
-                 <h3 className='fs-4 mb-3'>All Reviews ({reviews.length})</h3>
-                {reviews?.map(review => (
-                    <Review review={review} user={user} key={review._id} 
-                    reFetch={reFetch} setRefetch={setRefetch}
-                    />
-                ))}
+            {product.reviews?.length > 0 && <div className='reviews'>
+                <h3 className='fs-4 mb-3'>All Reviews ({product.reviews?.length})</h3>
+                <div className="reviews_container">
+                    {product.reviews?.map(review => (
+                        <Review setProduct={setProduct} product={product} review={review} user={user} key={review._id} />
+                    ))}
+                </div>
             </div>
             }
         </div>

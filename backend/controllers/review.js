@@ -20,6 +20,7 @@ module.exports.CreateReview = async (req, res) => {
             author: req.user.customer_id,
             product: productID
         })
+        await newReview.populate({path: 'author', select: 'first_name last_name'});
 
         customer.reviews.push(newReview)
         product.reviews.push(newReview)

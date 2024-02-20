@@ -5,7 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Axios from 'axios'
 
-const Review = ({review, user}) => {
+const Review = ({review, product, setProduct, user}) => {
     const [open, setOpen] = useState(false)
     const handleClick = (open) => {
         setOpen(!open)
@@ -16,7 +16,7 @@ const Review = ({review, user}) => {
         })
         .then(res => {
             if(res.status === 200){
-                
+                setProduct({...product, reviews: product.reviews.filter(revieww => revieww._id !== review._id)})
             }
         })
     }
@@ -36,8 +36,8 @@ const Review = ({review, user}) => {
                 </div>
             </div>
             <div className="review_footer">
-                {((review.body.length < 200) && !review.image.url)  ? "" : <p onClick={()=> {handleClick(open)}} 
-                className='read_more_btn'>{(open === false) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> } 
+                {((review.body.length < 200) && !review.image.url) ? "" : 
+                <p onClick={()=> {handleClick(open)}} className='read_more_btn'>{(open === false) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> } 
                 <span className='read_more'>Read {(open === false) ? "more" : "less" }</span></p>}
             </div>
             {user.id === review.author._id && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
