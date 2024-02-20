@@ -17,15 +17,13 @@ const Products = () => {
     const handleChange = (e, value) => {
         setPage(value);
       };
-
     useEffect(() => {
         // Function to fetch data using Axios
         const fetchData = async () => {
         try {
-            const response = await Axios.get(`http://localhost:8000/product/${category}?brand=${brandSelected}& page=${page}`)
+            const response = await Axios.get(`http://localhost:8000/product/${category}?brand=${brandSelected}&page=${page}`)
             setData(response.data.products)
-            setPageCount(response.data.PageCount)
-            setBrands(response.data.brands)
+            setPageCount(response.data.PageCount)     
         } catch (error) {
             console.log(error);
         }
@@ -33,6 +31,15 @@ const Products = () => {
         // Call the function to fetch data
         fetchData();
     }, [page, brandSelected])
+
+    useEffect(() => {
+        Axios.get(`http://localhost:8000/product/available-brands?category=${category}`)
+        .then((res) => {
+            setBrands(res.data);
+            console.log(res.data);
+        })
+        .catch((err) => console.log(err))
+    }, [category])
 
     return (
         <div className='d-flex'>
@@ -50,7 +57,7 @@ const Products = () => {
             </Stack>
             </div>}
         </div>
-        <BrandSideBar products={data} brands={brands} brandSelected={brandSelected} setBrandSelected={setBrandSelected}/>
+        <BrandSideBar products={data} setPage={setPage} brands={brands} brandSelected={brandSelected} setBrandSelected={setBrandSelected}/>
         </div>
     );
 }

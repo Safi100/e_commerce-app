@@ -62,17 +62,39 @@ module.exports.getProducts = async (req, res) => {
 
         const count = await Product.countDocuments(query)
         const products = await Product.find(query).limit(items_per_page).skip(skip)
-        const brandIds = [...new Set(products.map(product => product.brand))];
-        const brands = await Brand.find({ _id: { $in: brandIds } });
+
 
         const pageCount = count / items_per_page
         
-        res.status(200).json({products, brands, count, PageCount:Math.ceil(pageCount) })
+        res.status(200).json({products, count, PageCount:Math.ceil(pageCount) })
     }catch(e){
         console.log(e);
     }
 }
 
+module.exports.getAllBrands = async (req, res) => {
+    try{
+        const {category} = req.query
+
+        const query = {}
+
+        if (category === 'deals') {
+            query['discount'] = { $gte: 1};
+        }else{
+            const categoryy = await Category.findOne({CategoryName: category});
+            query['category'] = categoryy._id;
+        }
+
+        // Find all products that match the query
+        const products = await Product.find(query).lean();
+        const brandIds = [...new Set(products.map(product => product.brand))];
+        const brands = await Brand.find({ _id: { $in: brandIds } })
+
+        res.json(brands);
+    }catch(e){
+        console.log(e);
+    }
+}
 module.exports.productProfile = async (req, res) => {
     try{
         const id = req.params.id
