@@ -95,6 +95,7 @@ module.exports.getAllBrands = async (req, res) => {
         console.log(e);
     }
 }
+
 module.exports.productProfile = async (req, res) => {
     try{
         const id = req.params.id

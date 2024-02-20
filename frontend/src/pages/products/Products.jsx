@@ -48,8 +48,8 @@ const Products = () => {
                 {
                     data.map(product => (
                         <Product product={product} key={product._id} />
-                        )
-                        )}
+                    )
+                )}
             </div>
             {(pageCount > 1) && <div className='d-flex justify-content-center mt-5'>
             <Stack spacing={2}>
