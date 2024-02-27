@@ -6,8 +6,11 @@ footer{
 footer .footer_nav{
     display: flex;
     gap: 50px;
+    flex-wrap: wrap;
+    row-gap: 10px;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 footer .footer_row{
     display: grid;
@@ -25,4 +28,5 @@ footer .footer_row .col{
 }
 .col h3{
     font-size: 18px;
+    margin-bottom: 20px;
 }
