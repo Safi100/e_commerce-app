@@ -101,8 +101,16 @@ module.exports.productProfile = async (req, res) => {
     try{
         const id = req.params.id
 
-        const product = await Product.findById(id).populate('category').populate({path:'reviews', populate:{path:'author'}})
+        let product = await Product.findById(id).populate('category').populate({path:'reviews', populate:{path:'author'}})
         if(product){
+            // get average rating of this product
+            let rating = 0;
+            product.reviews.forEach(review => {
+                rating += review.rating
+            })
+            const avgerage_rating = rating / product.reviews.length;
+            product = product.toObject();
+            product.average_rating = avgerage_rating;
             res.status(200).json(product)
         }else{
             res.status(400).json({error: "product not found"})
