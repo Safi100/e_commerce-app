@@ -1,6 +1,10 @@
 const Customer = require('../models/customer')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const PasswordToken = require('../models/passwordToken')
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const {sendEmail} = require('../utils/mail');
 
 module.exports.CreateAccount = async (req, res) => {
     try{
@@ -84,6 +88,64 @@ module.exports.renderProfile = async (req, res) => {
         console.log(e);
     }
 }
+
+module.exports.send_reset_mail = async (req, res) => {
+    try{
+        const email = req.body.email.toLowerCase().trim();
+        const customer = await Customer.findOne({email});
+        if(!customer) throw new Error('Email not found on system');
+        const passwordToken = await PasswordToken.findOne({CustomerId: customer._id});
+        // if passwordCode exist delete it
+        if(passwordToken) await passwordToken.deleteOne({CustomerId: customer._id});
+        // generate a new password token
+        const NewPasswordToken = crypto.randomBytes(32).toString("hex");
+        // hash the new password token to secure it on database
+        const hashedToken = await bcrypt.hash(NewPasswordToken, 10);
+        const newPasswordToken = new PasswordToken({
+            CustomerId: customer._id,
+            token: hashedToken
+        })
+        await newPasswordToken.save()
+        // Send email to customer
+        await sendEmail(customer.email, "Reset your password", `<p>Hi ${customer.email}</p>
+        <p>Please click on the link below to reset your password</p>
+        <a href="http://localhost:3000/reset-password/${customer._id}/${newPasswordToken.token}">Reset Password</a>
+        <p>Link will expire in 1 hour.</p>
+        <p>If you didn't request a password reset, please ignore this email, and your password will remain unchanged.</p>
+        `)
+        res.status(200).json({success: true, message: 'Email sent successfully (check spam folder)'})
+    }catch(e){
+        res.status(404).json({error: e.message})
+        console.log(e);
+    }
+}
+
+module.exports.reset_password = async (req, res) => {
+    try{
+        const {id, token} = req.params;
+        const password = req.body.password.trim();
+        const confirmPassword = req.body.confirmPassword.trim();
+        // check if user and token is valid
+        if(!mongoose.Types.ObjectId.isValid(id)) throw new Error(`Invalid link`);
+        const customer = await Customer.findById(id);
+        if(!customer) throw new Error('Customer not found');
+        const passwordResetToken = await PasswordToken.findOne({CustomerId: customer._id});
+        if (!passwordResetToken) throw new Error(`Invalid link`);
+        const match = (token === passwordResetToken.token);
+        if(!match) throw new Error(`Invalid link`);
+        if (password.length < 6) throw new Error(`Password must be at least 6 characters.`);
+        if (password !== confirmPassword) throw new Error(`Password and confirm password must match.`);
+        const hashedPass = await bcrypt.hash(password, 10);
+        const updatedUser = await Customer.findByIdAndUpdate({_id: id}, {password: hashedPass})
+        if(!updatedUser) throw new Error(`Password didn't update.`);
+        await PasswordToken.deleteOne({ CustomerId: id });
+        res.send({message: 'Password changed successfully'});
+    }catch(e){
+        res.status(400).json({error: e.message})
+        console.log(e);
+    }
+}
+
 module.exports.editAddress = async (req, res) => {
     try{
         const customer = await Customer.findByIdAndUpdate(req.user.customer_id)
