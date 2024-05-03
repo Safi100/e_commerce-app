@@ -1,0 +1,55 @@
+.bg_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    background: linear-gradient(to right, rgba(52, 42, 157, 0.4), rgba(121, 163, 76, 0.4)), url('../../assets/auth_bg.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+.bg_container form{
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    padding: 35px 20px;
+}
+.bg_container input[type="file"]:hover ~ .plus{
+    opacity: 1;
+}
+.bg_container .notSelected{
+    opacity: 1 !important;
+}
+.bg_container .input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 40px;
+}
+.bg_container .input input{
+    outline: none;
+    height: 40px;
+    padding: 0 20px;
+}
+.bg_container .input input:focus, .input input:valid{
+    border: 1px solid #2a9d8f;
+}
+.bg_container .bg_container .input label{
+    font-weight: bold;
+}
+.bg_container a{
+    color: blue;
+}
+.bg_container .Btn{
+    margin-top: 15px;
+    background: #2a9d8f;
+    color: #fff;
+    border: 0;
+    padding: 15px;
+    width: 100%;
+    cursor: pointer;
+}
+.bg_container .Btn:hover{
+    opacity: 0.7;
+}

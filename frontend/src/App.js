@@ -7,25 +7,32 @@ import NotFound from "./pages/notFound/NotFound";
 import ProductProfile from "./pages/productProfile/ProductProfile";
 import Footer from "./components/footer/Footer";
 import Login from "./pages/login/Login";
+import ForgetPass from "./pages/forget_pass/Forget_pass";
 import CustomerProfile from "./pages/customer/CustomerProfile";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
 
 function App() {
   const path = useLocation()
-  const isLoginPageOrRegisterPage = path.pathname === '/register' || path.pathname === '/login';
+  const Hide = path.pathname === '/register' || 
+  path.pathname === '/login' || 
+  path.pathname === '/forget-password' || 
+  path.pathname.includes('/reset-password');
+
   return (
     <div className="App">
-      {!isLoginPageOrRegisterPage && <Header />}
+      {!Hide && <Header />}
       <Routes>
         <Route exact path='/' element={<Index/>} />
+        <Route path='/forget-password' element={<ForgetPass/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/my-account' element={<CustomerProfile />} />
         <Route path='/product-category/:category' element={<Products />} />
         <Route path='/product-profile/:id' element={<ProductProfile />} />
+        <Route path='/reset-password/:UserID/:token' element={<ResetPassword/>} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
-      {!isLoginPageOrRegisterPage && <Footer />}
-      
+      {!Hide && <Footer />}
     </div>
   );
 }
