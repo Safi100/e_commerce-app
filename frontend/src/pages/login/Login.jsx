@@ -53,6 +53,7 @@ const Login = () => {
             </div>
             {error &&  <div className='mt-4'><Alert severity="error">{error}!</Alert></div>}
             <div className='RegBtn_div'>
+              <div><a href="/forget-password">Forget password</a></div>
               <a href="/register">Don't have an account? Sign up</a>
               <button className='RegBtn' type='submit'>Login</button>
             </div>
