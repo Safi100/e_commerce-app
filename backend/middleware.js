@@ -2,24 +2,21 @@ const jwt = require('jsonwebtoken')
 const Review = require('./models/review')
 
 module.exports.authorization = (req, res, next) => {
-    const AuthHeader = req.headers.authorization
+    const token = req.headers.authorization || req.cookies.access_token;
+    if (!token) throw new HandleError('You must log in to access this', 401);
+
     const secret_key = process.env.SECRET_KEY
-    if(AuthHeader){
-        const token = AuthHeader.split(" ")[1]
-        jwt.verify(token, secret_key, (err, user) => {
-            if (err) return res.status(403).json({ error: 'Token is not valid!' });
-            req.user = user;
-            next();
-        });
-    }else{
-        return res.status(401).json({ error: 'Unauthorized' });
-    }
+    jwt.verify(token, secret_key, (err, user) => {
+        if (err) return res.status(403).json({ error: 'Token is not valid!' });
+        req.user = user;
+        next();
+    });
 }
 
 module.exports.isReviewAuthor = async (req, res, next) => {
     const reviewId = req.params.id
     const review = await Review.findById(reviewId)
-    if(review && !review.author.equals(req.user.customer_id)){
+    if(review && !review.author.equals(req.user.id)){
         return res.status(400).json({error: "You don't have permission to delete this review!"}) 
     }
     return next()
