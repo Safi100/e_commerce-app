@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
-import {AuthContext} from '../context/AuthContext'
+import {AuthContext} from '../context/AuthContext' 
 import { useNavigate } from 'react-router-dom'
 
 function stringAvatar(name) {
@@ -23,12 +23,16 @@ function stringAvatar(name) {
 
 
 export default function AccountMenu() {
-  const {user, dispatch} = React.useContext(AuthContext)
+  const authContext = React.useContext(AuthContext)
+  const [currentUser, setCurrentUser] = React.useState(null);
+  React.useEffect(() => {
+    setCurrentUser(authContext.currentUser);
+  }, [authContext]);
+
   const Navigate = useNavigate() 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const HandleLogOut = () => {
-    // todo : fix navigate
-    dispatch({type: "LOGOUT"})
+    authContext.logout()
     Navigate('/')
   }
   const open = Boolean(anchorEl);
@@ -49,7 +53,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-          <Avatar sx={{ width: 32, height: 32 }} {...stringAvatar(`${user.first_name} ${user.last_name}`)} style={{color: '#2a9d8f'}}/>
+          {currentUser && <Avatar sx={{ width: 32, height: 32 }} {...stringAvatar(`${currentUser?.first_name} ${currentUser?.last_name}`)} style={{color: '#2a9d8f'}}/>}
           </IconButton>
         </Tooltip>
       </Box>
