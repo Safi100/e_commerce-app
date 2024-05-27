@@ -62,14 +62,8 @@ module.exports.Login = async (req, res) => {
         const token = jwt.sign({ customer_id: customer._id }, secret_key, {
             expiresIn:'30d'
         })
-        res.cookie('accessToken', token, {
-            httpOnly: true
-        }).status(200).json({
-            id: customer._id,
-            first_name: customer.first_name,
-            last_name: customer.last_name,
-            token
-        })
+        res.cookie('c_user', customer._id.toString());
+        res.cookie('accessToken', token, { httpOnly: true }).status(200).json({token});
         
     }catch(e){
         res.status(401).json({error: e.message})
@@ -164,4 +158,19 @@ module.exports.editAddress = async (req, res) => {
         res.status(404).json({error: e.message})
         console.log(e);
     }   
+}
+module.exports.editCustomerData = async (req, res) => {
+    try{
+        const {first_name, last_name} = req.body
+        const customer = await Customer.findByIdAndUpdate(req.user.customer_id)
+        if(!customer) throw new Error('Customer not found')
+        console.log(req.body);
+        customer.first_name = first_name.trim()
+        customer.last_name = last_name.trim()
+        await customer.save()
+        res.status(200).json({success: true, message: 'Your data updated successfully'})
+    }catch(e){
+        res.status(404).json({error: e.message})
+        console.log(e);
+    }
 }
