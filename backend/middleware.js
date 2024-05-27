@@ -3,7 +3,7 @@ const Review = require('./models/review')
 
 module.exports.authorization = (req, res, next) => {
     const token = req.headers.authorization || req.cookies.accessToken;
-    if (!token) throw new Error('You must log in to access this');
+    if (!token) return res.status(401).send('You must log in to access this');
 
     const secret_key = process.env.SECRET_KEY
     jwt.verify(token, secret_key, (err, user) => {
