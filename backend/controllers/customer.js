@@ -83,7 +83,11 @@ module.exports.fetchCurrentUser = async (req, res, next) => {
     try{
         const currentUser = await Customer.findById(req.user.id)
         .select(['-cart', '-password', '-updatedAt', '-createdAt', '-reviews', '-address'])
+<<<<<<< HEAD
         res.status(200).json(currentUser)
+=======
+        res.status(200).json({currentUser})
+>>>>>>> 5fb58970c0c0c552cc27f98ccba685881879d873
     }catch(e){
         res.status(404).json({error: e.message})
         console.log(e);
