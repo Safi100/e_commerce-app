@@ -59,7 +59,7 @@ module.exports.Login = async (req, res) => {
             throw new Error('Email or password incorrect')
         }
         // Create token
-        const token = jwt.sign({ customer_id: customer._id }, secret_key, {
+        const token = jwt.sign({ id: customer._id }, secret_key, {
             expiresIn:'30d'
         })
         res.cookie('c_user', customer._id.toString());
@@ -70,9 +70,28 @@ module.exports.Login = async (req, res) => {
         console.log(e);
     }
 }
+module.exports.Logout = async (req, res, next) => {
+    try{
+        await res.clearCookie('access_token');
+        await res.clearCookie('c_user');
+        res.status(200).send({success: true})
+    }catch (e) {
+        res.status(401).json({error: e.message})
+    }
+}
+module.exports.fetchCurrentUser = async (req, res, next) => {
+    try{
+        const currentUser = await Customer.findById(req.user.id)
+        .select(['-cart', '-password', '-updatedAt', '-createdAt', '-reviews', '-address'])
+        res.status(200).json({currentUser})
+    }catch(e){
+        res.status(404).json({error: e.message})
+        console.log(e);
+    }
+}
 module.exports.renderProfile = async (req, res) => {
     try{
-        const customer = await Customer.findById(req.user.customer_id).populate({path:'reviews', populate:{path: 'product', populate: ['brand', 'category']}})
+        const customer = await Customer.findById(req.user.id).populate({path:'reviews', populate:{path: 'product', populate: ['brand', 'category']}})
         if(!customer) throw new Error('Customer not found')
         // Send customer data without password
         const { password, ...CUSTOMER } = customer.toObject();
@@ -142,7 +161,7 @@ module.exports.reset_password = async (req, res) => {
 
 module.exports.editAddress = async (req, res) => {
     try{
-        const customer = await Customer.findByIdAndUpdate(req.user.customer_id)
+        const customer = await Customer.findByIdAndUpdate(req.user.id)
         if(!customer) throw new Error('Customer not found')
         // Update the address fields
         customer.address = {
@@ -162,7 +181,7 @@ module.exports.editAddress = async (req, res) => {
 module.exports.editCustomerData = async (req, res) => {
     try{
         const {first_name, last_name} = req.body
-        const customer = await Customer.findByIdAndUpdate(req.user.customer_id)
+        const customer = await Customer.findByIdAndUpdate(req.user.id)
         if(!customer) throw new Error('Customer not found')
         console.log(req.body);
         customer.first_name = first_name.trim()
