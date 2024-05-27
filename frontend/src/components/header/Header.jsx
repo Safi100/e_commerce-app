@@ -26,7 +26,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = () => {
     const cartContext = useContext(CartContext).cart;
-    const {user} = useContext(AuthContext)
+    const {currentUser} = useContext(AuthContext)
     const [search, setSearch] = useState('')
     const [products, setProducts] = useState([])
     const [open, setOpen] = useState(false)
@@ -52,7 +52,7 @@ const Header = () => {
                 <div className="logo">
                     <a href="/">E-COMMERCE</a>
                     <div className='mobile_account'>
-                    {user &&
+                    {currentUser &&
                     <span className='cart'>
                     <IconButton aria-label="cart">
                         <StyledBadge badgeContent={cartContext.cartQuantity} color="secondary" max={9}>
@@ -75,7 +75,7 @@ const Header = () => {
                     </div>}
                 </div>
                 <div className="account">
-                {user &&
+                {currentUser &&
                     <span className='cart' onClick={()=> setOpenCart(true)} >
                     <IconButton aria-label="cart">
                         <StyledBadge badgeContent={cartContext.cartQuantity} color="secondary" max={9}>
@@ -84,8 +84,8 @@ const Header = () => {
                     </IconButton>
                     </span>
                 }
-                    {user && <AccountMenu />}
-                    {!user && 
+                    {currentUser && <AccountMenu />}
+                    {!currentUser && 
                         <div className='d-flex gap-2'>
                             <a className='logReg_btn' href="/register">Register</a>
                             <a className='logReg_btn' href="/login">Login</a>
@@ -94,9 +94,9 @@ const Header = () => {
                     <span className='menu' onClick={()=> setOpen(true)}><MenuOutlinedIcon style={{color: '#fff'}}/></span>
                 </div>
             </div>
-            <Nav user={user} />
-            <MobileNav open={open} setOpen={setOpen} user={user}/>
-            {user && <Cart cart={cartContext} setOpenCart={setOpenCart} openCart={openCart} />}
+            <Nav currentUser={currentUser} />
+            <MobileNav open={open} setOpen={setOpen} currentUser={currentUser}/>
+            {currentUser && <Cart cart={cartContext} setOpenCart={setOpenCart} openCart={openCart} />}
         </div>
     );
 }
