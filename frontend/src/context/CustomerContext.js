@@ -16,11 +16,9 @@ export const CustomerContextProvider = ({ children }) => {
 
   // Function to fetch customer data
   const fetchCustomerData = () => {
-    Axios.get('http://localhost:8000/user/', {
-      headers: { Authorization: "Bearer " + user.token }
-    })
+    Axios.get('http://localhost:8000/user')
     .then(res => {
-
+      console.log(res.data);
       setCustomer(res.data);
     })
     .catch(err => {
@@ -29,22 +27,28 @@ export const CustomerContextProvider = ({ children }) => {
     });
   };
   const editAddress = (address) => {
-    console.log(address);
-    Axios.put('http://localhost:8000/user/editAddress', address, {
-      headers: { Authorization: "Bearer " + user.token }
+    Axios.put('http://localhost:8000/user/editAddress', address)
+    .then(res => {
+        fetchCustomerData()
     })
-   .then(res => {
+    .catch(err => {
+        console.error("Error editing address:", err); 
+    })
+  }
+  const editCustomerData = (customer) => {
+    const first_name = customer.first_name
+    const last_name = customer.last_name
+    Axios.put('http://localhost:8000/user/editCustomerData', {first_name, last_name})
+    .then(res => {
       fetchCustomerData()
-   })
-   .catch(err => {
-      console.error("Error editing address:", err); 
-   })
+    })
+    .catch(err => {
+      console.error("Error editing customer:", err); 
+    })
   }
   const deleteReview = (review) => {
     console.log(review);
-    Axios.delete(`http://localhost:8000/review/deleteReview/${review._id}`, {
-        headers: {authorization: "Bearer " + user.token}
-    })
+    Axios.delete(`http://localhost:8000/review/deleteReview/${review._id}`)
     .then(res => {
         if(res.status === 200){
           fetchCustomerData()
@@ -53,7 +57,7 @@ export const CustomerContextProvider = ({ children }) => {
 }
 
   // Return the context value
-  const contextValue = { customer, editAddress, deleteReview };
+  const contextValue = { customer, editAddress, deleteReview, editCustomerData, fetchCustomerData };
 
   return (
     <CustomerContext.Provider value={contextValue}>
