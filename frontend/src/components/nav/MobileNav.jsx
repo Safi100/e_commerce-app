@@ -3,11 +3,11 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import {AuthContext} from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-const MobileNav = ({open, setOpen, user}) => {
-    const {dispatch} = React.useContext(AuthContext)
+const MobileNav = ({open, setOpen, currentUser}) => {
+    const authContext = React.useContext(AuthContext)
     const Navigate = useNavigate()
     const handleLogOut = (e) => {
-        dispatch({type: "LOGOUT"})
+        authContext.logout()
         Navigate('/')
     }
     return (
@@ -15,7 +15,7 @@ const MobileNav = ({open, setOpen, user}) => {
             {open && <div className='backdrop-overlay'></div>}
             <div className={`mobile-nav ${open && 'active'}`}>
                 <div>
-                    {!user &&
+                    {!currentUser &&
                     <div className='mobile-nav_header'>
                         <div className='mobile-nav_header_account'>
                             <div><a href="/register">Register</a></div>
@@ -25,14 +25,14 @@ const MobileNav = ({open, setOpen, user}) => {
                         <div onClick={()=> setOpen(false)}><CloseOutlinedIcon /></div>    
                     </div>
                     }
-                    {user && <div onClick={()=> setOpen(false)}><CloseOutlinedIcon /></div>}    
+                    {currentUser && <div onClick={()=> setOpen(false)}><CloseOutlinedIcon /></div>}    
                     <ul className='mobile-nav-ul'>
                         <li><a href="/">Home</a></li>
                         <li><a href="/">About us</a></li>
                         <li><a href="/">How to order</a></li>
                         <li><a href="/product-category/deals">Deals</a></li>
-                        {user && <li><a href="/my-account">My Account</a></li>}
-                        {user && <li className='logout'><button onClick={handleLogOut}><LogoutOutlinedIcon /> Logout</button></li>}
+                        {currentUser && <li><a href="/my-account">My Account</a></li>}
+                        {currentUser && <li className='logout'><button onClick={handleLogOut}><LogoutOutlinedIcon /> Logout</button></li>}
                     </ul>
                 </div>
             </div>
