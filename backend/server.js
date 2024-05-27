@@ -14,18 +14,21 @@ const categoryRoute = require('./routes/category')
 const userRoute = require('./routes/customer')
 const cartRoute = require('./routes/cart')
 const reviewRoute = require('./routes/review')
-
-const Customer = require('./models/customer')
-const Product = require('./models/product')
+const orderRoute = require('./routes/order')
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: ['http://localhost:3000'],
+    credentials: true
+}));
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cookieParser())
 
-mongoose.connect('mongodb://localhost:27017/Ecommerce', {
+// kCt9Zs4RUT1hvUs0
+
+mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true, 
     useUnifiedTopology: true,
     family: 4,
@@ -38,6 +41,7 @@ app.use('/category', categoryRoute)
 app.use('/user', userRoute)
 app.use('/cart', cartRoute)
 app.use('/review', reviewRoute)
+app.use('/order', orderRoute)
 
 app.listen(8000, ()=>{
     console.log("app listining on port 8000");
