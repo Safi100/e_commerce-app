@@ -6,7 +6,7 @@ import Alert from '@mui/material/Alert';
 import { AuthContext } from '../../context/AuthContext';
 
 const Login = () => {
-    const {loading, dispatch} = useContext(AuthContext)
+    const authContext = useContext(AuthContext)
     const Navigate = useNavigate()
     const [formData, setFormData] = useState({
       email: '',
@@ -24,18 +24,17 @@ const Login = () => {
 
     const HandleLogin = (e) => {
       e.preventDefault()
-      dispatch({type: "LOGIN_START"})
       Axios.post('http://localhost:8000/user/login', {...formData})
       .then(res => {
         if(res.status === 200){
           setError('')
-          dispatch({type: "LOGIN_SUCCESS", payload: res.data})
+          authContext.fetchCurrentUser()
           Navigate('/')
         }
       })
       .catch(err => {
         setError(err.response.data.error)
-        dispatch({type: "LOGIN_FAILURE", payload: err.response.data})
+        console.log(err);
       })
     }
     return (
