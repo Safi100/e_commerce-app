@@ -10,6 +10,7 @@ import Login from "./pages/login/Login";
 import ForgetPass from "./pages/forget_pass/Forget_pass";
 import CustomerProfile from "./pages/customer/CustomerProfile";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
+import axios from 'axios';
 
 function App() {
   const path = useLocation()
@@ -17,6 +18,8 @@ function App() {
   path.pathname === '/login' || 
   path.pathname === '/forget-password' || 
   path.pathname.includes('/reset-password');
+  
+  axios.defaults.withCredentials = true;
 
   return (
     <div className="App">
