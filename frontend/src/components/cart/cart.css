@@ -144,6 +144,9 @@
     border-bottom: 2px solid #bcbcbc;
     margin-top: 45px;
 }
+.shipping_note{
+    font-size: 13px;
+}
 .check-out_btn .totalCost{
     display: flex;
     justify-content: space-between;

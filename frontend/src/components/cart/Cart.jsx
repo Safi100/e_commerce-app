@@ -4,8 +4,9 @@ import Item from './Item';
 import Arrow from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 const Cart = ({cart, setOpenCart, openCart}) => {
-    const [DeliveryCost, setDeliveryCost] = useState(cart.total >= 300 ? 0 : 10);
+    const [DeliveryCost, setDeliveryCost] = useState(cart.total >= 300 ? 0 : 20);
     const [totalCost, setTotalCost] = useState(0)
+
     useEffect(() => {
         // Recalculate totalCost whenever DeliveryCost or cart.total changes
         const newTotalCost = Number(cart.total) + Number(DeliveryCost);
@@ -14,14 +15,9 @@ const Cart = ({cart, setOpenCart, openCart}) => {
 
         // Update DeliveryCost when cart.total changes
         useEffect(() => {
-            const updatedDeliveryCost = cart.total >= 300 ? 0 : 10;
+            const updatedDeliveryCost = cart.total >= 300 ? 0 : 20;
             setDeliveryCost(updatedDeliveryCost);
         }, [cart.total]);
-
-        // Handler to update DeliveryCost when the dropdown value changes
-        const handleDeliveryCostChange = (e) => {
-            setDeliveryCost(Number(e.target.value));
-        };
 
     return (
         <div className={`cartBOX ${openCart == true ? 'showCart' : '' }`}>
@@ -51,22 +47,8 @@ const Cart = ({cart, setOpenCart, openCart}) => {
                         </div>
                         <div className="shipping_promo mb-4">
                             <div className='shipping mb-5'>
-                            <p className='mb-3 fw-bold'>SHIPPING</p>
-                                <select className='p-2 px-3' name="" value={DeliveryCost} onChange={handleDeliveryCostChange}>
-                                    {cart.total >= 300 ? (
-                                        <>
-                                        <option value={0}>Free Economy Delivery (3-5 days)</option>
-                                        <option value={10}>Standard Delivery (1-3 days) - $10</option>
-                                        <option value={30}>Same-Day Delivery - $30</option>
-                                        </>
-                                    ) : (
-                                        <>
-                                        <option value={10}>Economy Delivery (3-5 days) - $10</option>
-                                        <option value={30}>Standard Delivery (1-5 days) - $30</option>
-                                        <option value={50}>Same-Day Delivery - $50</option>
-                                        </>
-                                    )}
-                                </select>
+                            <p className='mb-3 fw-bold shipping_note'>SHIPPING IS FREE FOR ORDER COST 300$ OR MORE</p>
+                            <p className='mb-3 fw-bold'>SHIPPING: ${DeliveryCost}</p>
                             </div>
                             <div className='PromoCode mb-5'>
                                 <p className='fw-bold'>PROMO CODE (soon)</p>
