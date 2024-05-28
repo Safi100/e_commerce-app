@@ -72,7 +72,7 @@ module.exports.Login = async (req, res) => {
 }
 module.exports.Logout = async (req, res, next) => {
     try{
-        await res.clearCookie('access_token');
+        await res.clearCookie('accessToken');
         await res.clearCookie('c_user');
         res.status(200).send({success: true})
     }catch (e) {
@@ -183,7 +183,6 @@ module.exports.editCustomerData = async (req, res) => {
         const {first_name, last_name} = req.body
         const customer = await Customer.findByIdAndUpdate(req.user.id)
         if(!customer) throw new Error('Customer not found')
-        console.log(req.body);
         customer.first_name = first_name.trim()
         customer.last_name = last_name.trim()
         await customer.save()
