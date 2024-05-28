@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Axios from 'axios'
 
-const Reviews = ({user, product, setProduct, productID}) => {
+const Reviews = ({currentUser, product, setProduct, productID}) => {
     const [rating, setRating] = useState(0)
     const [selectedImage, setSelectedImage] = useState('');
     const [selectedImageDisplay, setSelectedImageDisplay] = useState('');
@@ -26,8 +26,8 @@ const Reviews = ({user, product, setProduct, productID}) => {
         const { name, value } = e.target;
         const text = value.trimStart();
         setFormData((prevData) => ({
-          ...prevData,
-          [name]: text
+            ...prevData,
+            [name]: text
         }))
     }
     const AddReview = (e) => {
@@ -35,7 +35,8 @@ const Reviews = ({user, product, setProduct, productID}) => {
         setError('')
         setSuccess('')
         if(rating === 0) {
-            return setError("Please rate before submit")
+            setError("Please rate before submit");
+            return ;
         } 
         let Data = new FormData()
         Data.append('title', formData.title)
@@ -44,9 +45,7 @@ const Reviews = ({user, product, setProduct, productID}) => {
         Data.append('rating', rating)
         Data.append('productID', productID)
 
-        Axios.post('http://localhost:8000/review/addReview', Data, {
-            headers: {authorization: "Bearer " + user.token}
-        })
+        Axios.post('http://localhost:8000/review/addReview', Data)
         .then(res => {
             if(res.status === 200){
                 e.target.reset()
@@ -59,7 +58,6 @@ const Reviews = ({user, product, setProduct, productID}) => {
                 setSelectedImageDisplay('')
                 setError('')
                 setSuccess('Review added successfully')
-                console.log(res);
                 setProduct({...product, reviews: [...product.reviews, res.data.newReview]})
             }
         })
@@ -70,13 +68,14 @@ const Reviews = ({user, product, setProduct, productID}) => {
     }
     return (
         <div className='review_dev mt-5'>
-            {user &&  <form className='review-form-container__parent' onSubmit={AddReview}>
+            {currentUser &&
+            <form className='review-form-container__parent' onSubmit={AddReview}>
                 <div className="review-form-container">
                     <h2 className="review-header">Write a Review</h2>
                     <div className="rating-stars">
-                    <Box sx={{ '& > legend': { mt: 2 },}} >
-                        <Rating value={rating} name='rating' onChange={(e, value)=> setRating(value)} required/>
-                    </Box>
+                        <Box sx={{ '& > legend': { mt: 2 },}} >
+                            <Rating value={rating} name='rating' onChange={(e, value)=> setRating(value || 0)} required/>
+                        </Box>
                     </div>
                     <input type="text" onChange={handleInputChange}  className='review-text' value={formData.title} name='title' placeholder='Write your review heading...' required/>
                     <textarea value={formData.body} onChange={handleInputChange} name='body' className="review-textarea" placeholder="Write your review here..."  required/>
@@ -86,11 +85,7 @@ const Reviews = ({user, product, setProduct, productID}) => {
                             {selectedImage && <button onClick={() => {setSelectedImage(''); setSelectedImageDisplay('') }} 
                             className='btn btn-outline-danger' type='button'>delete Image</button>}
                         </div>
-                        <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        />
+                        <input type="file" accept="image/*" onChange={handleImageChange}/>
                         {selectedImage && <img className='review_SelectedImage' src={selectedImageDisplay} alt={selectedImage.name}/>}
                     </div>
                     {error && <p className='text-danger'>{error}</p>}
@@ -102,7 +97,7 @@ const Reviews = ({user, product, setProduct, productID}) => {
                 <h3 className='fs-4 mb-3'>All Reviews ({product.reviews?.length})</h3>
                 <div className="reviews_container">
                     {product.reviews?.map(review => (
-                        <Review setProduct={setProduct} product={product} review={review} user={user} key={review._id} />
+                        <Review setProduct={setProduct} product={product} review={review} currentUser={currentUser} key={review._id} />
                     ))}
                 </div>
             </div>

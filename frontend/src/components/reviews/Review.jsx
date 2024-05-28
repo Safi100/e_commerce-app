@@ -5,15 +5,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Axios from 'axios'
 
-const Review = ({review, product, setProduct, user}) => {
+const Review = ({review, product, setProduct, currentUser}) => {
     const [open, setOpen] = useState(false)
     const handleClick = (open) => {
         setOpen(!open)
     }
     const deleteReview = (e) => {
-        Axios.delete(`http://localhost:8000/review/deleteReview/${review._id}`, {
-            headers: {authorization: "Bearer " + user.token}
-        })
+        Axios.delete(`http://localhost:8000/review/deleteReview/${review._id}`)
         .then(res => {
             if(res.status === 200){
                 setProduct({...product, reviews: product.reviews.filter(revieww => revieww._id !== review._id)})
@@ -40,7 +38,7 @@ const Review = ({review, product, setProduct, user}) => {
                 <p onClick={()=> {handleClick(open)}} className='read_more_btn'>{(open === false) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> } 
                 <span className='read_more'>Read {(open === false) ? "more" : "less" }</span></p>}
             </div>
-            {user.id === review.author._id && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
+            {currentUser._id === review.author._id && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
       </div>
     );
 }

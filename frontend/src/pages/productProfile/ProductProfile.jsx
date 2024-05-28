@@ -5,12 +5,13 @@ import './productProfile.css'
 import NoImage from '../../assets/image-placeholder.png'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
+import Rating from '@mui/material/Rating';
 import Reviews from '../../components/reviews/Reviews';
 import {AuthContext} from '../../context/AuthContext'
 import { CartContext } from '../../context/CartContext';
 // import NoImagee from '../../assets'
 const ProductProfile = () => {
-    const {user} = useContext(AuthContext)
+    const {currentUser} = useContext(AuthContext)
     const { id } = useParams()
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [loading, setLoading] = useState(true)
@@ -18,12 +19,11 @@ const ProductProfile = () => {
     const [product, setProduct] = useState({})
     const [quantity, setQuantity] = useState(1)
     const cart = useContext(CartContext)
-    // const [reFetch, setRefetch] = useState(false)
 
     useEffect(()=> {
         Axios.get(`http://localhost:8000/product/product-profile/${id}`)
         .then(res => {
-            setProduct(res.data)
+            setProduct(res.data);
         })
         .catch(err => {
             console.log(err)
@@ -62,7 +62,10 @@ const ProductProfile = () => {
                 </div>
                 <form className="product_info" onSubmit={HandleSubmit}>
                     <h2 className='product_title'>{product.title}</h2>
-                    <p>stars, {product.reviews?.length}</p>
+                    <p className='rating'>
+                        <span className='d-flex'>{product.average_rating} <Rating name="read-only" value={product.average_rating ?? ""} precision={0.1} readOnly /></span>
+                        <span>{product.reviews?.length} ratings</span>
+                        </p>
                     <div className='mt-2'>
                         <div className="price">
                             <span className='fs-2'><sup className='sign fs-5'>$</sup>{product.priceToPay}</span>
@@ -71,17 +74,15 @@ const ProductProfile = () => {
                         {(product.price !== product.priceToPay ) ? <p className='priceBefore text-secondary'>List price: <span className='originalPrice'>${product.price}</span></p> : ""}
                     </div>
                     {product.still_available ? <div className='Stock text-success'>In Stock</div> : <div className='Stock text-danger'>Out of Stock</div>}
-                    {user && 
-                        product.still_available && 
-                            <>
-                                <div className='counter_div'>
-                                    <span className='counter_control' onClick={()=> quantity < 10 && setQuantity(quantity+1)}><AddOutlinedIcon /></span>
-                                    <span>{quantity}</span>
-                                    <span className='counter_control' onClick={()=> quantity > 1 && setQuantity(quantity-1)}><RemoveOutlinedIcon /></span>
-                                </div>
-                                <button type='submit' disabled={!product.still_available} className="CartBtn" >Add to Cart</button>
-                            </>
-                                            
+                    {currentUser && product.still_available && 
+                        <>
+                            <div className='counter_div'>
+                                <span className='counter_control' onClick={()=> quantity < 10 && setQuantity(quantity+1)}><AddOutlinedIcon /></span>
+                                <span>{quantity}</span>
+                                <span className='counter_control' onClick={()=> quantity > 1 && setQuantity(quantity-1)}><RemoveOutlinedIcon /></span>
+                            </div>
+                            <button type='submit' disabled={!product.still_available} className="CartBtn" >Add to Cart</button>
+                        </>                
                     }
                     <hr />
                     <div>
@@ -99,7 +100,7 @@ const ProductProfile = () => {
                 <div>
                 </div>
             </div>
-            <Reviews user={user} setProduct={setProduct} product={product} productID={id} />
+            <Reviews currentUser={currentUser} setProduct={setProduct} product={product} productID={id} />
         </div>
     );
 }
