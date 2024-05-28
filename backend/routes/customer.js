@@ -4,7 +4,8 @@ const { CreateAccount, Login, renderProfile, editAddress, send_reset_mail,
 const router = express.Router({mergeParams: true})
 const { authorization } = require('../middleware')
 
-router.get('/', authorization, renderProfile)
+router.get('/renderProfile', authorization, renderProfile)
+
 router.get('/currentUser', authorization, fetchCurrentUser)
 
 router.route('/editAddress')
