@@ -30,7 +30,7 @@ const ReviewCard = ({review, user}) => {
                 className='read_more_btn'>{(open === false) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> } 
                 <span className='read_more'>Read {(open === false) ? "more" : "less" }</span></p>}
             </div>
-            {user.id === review.author && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
+            {user._id === review.author && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
         </div>
     );
 }
