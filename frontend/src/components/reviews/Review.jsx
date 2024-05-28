@@ -38,7 +38,7 @@ const Review = ({review, product, setProduct, currentUser}) => {
                 <p onClick={()=> {handleClick(open)}} className='read_more_btn'>{(open === false) ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> } 
                 <span className='read_more'>Read {(open === false) ? "more" : "less" }</span></p>}
             </div>
-            {currentUser._id === review.author._id && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
+            {currentUser?._id === review.author._id && <button className='btn btn-danger' onClick={deleteReview}>delete</button>}
       </div>
     );
 }
