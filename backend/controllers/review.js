@@ -6,7 +6,7 @@ const {cloudinary} = require('../cloudinary/index')
 module.exports.CreateReview = async (req, res) => {
     try{
         const {title, rating, body, productID} = req.body
-        const customer = await Customer.findById(req.user.customer_id)
+        const customer = await Customer.findById(req.user.id)
         const product = await Product.findById(productID)
         
         if(!customer) throw new Error('Customer not found')
@@ -17,7 +17,7 @@ module.exports.CreateReview = async (req, res) => {
             rating: rating,
             body: body.trim(),
             image,
-            author: req.user.customer_id,
+            author: req.user.id,
             product: productID
         })
         await newReview.populate({path: 'author', select: 'first_name last_name'});
@@ -45,7 +45,7 @@ module.exports.deleteReview = async (req, res) => {
             await cloudinary.uploader.destroy(DeletedReview.image.filename)
         }
         await Product.findByIdAndUpdate(DeletedReview.product, {$pull: { reviews: reviewId }})
-        await Customer.findByIdAndUpdate(req.user.customer_id , {$pull: { reviews: reviewId }})
+        await Customer.findByIdAndUpdate(req.user.id , {$pull: { reviews: reviewId }})
         res.status(200).json(DeletedReview)
     }catch(e){
         res.status(400).json({error: e.message})

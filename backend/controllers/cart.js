@@ -5,7 +5,7 @@ module.exports.addToCart = async (req, res) => {
     try{
         const quantity = req.query.quantity || 1
         const {productID} = req.body
-        const customer = await Customer.findById(req.user.customer_id).populate('cart.items.product').exec();
+        const customer = await Customer.findById(req.user.id).populate('cart.items.product').exec();
         const productt = await Product.findById(productID);
         if(!productt){
             throw new Error('Product not found')
@@ -37,7 +37,7 @@ module.exports.DeleteFromCart = async (req, res) => {
     try{
         const quantity = req.query.quantity || 1
         const {productID} = req.body
-        const customer = await Customer.findById(req.user.customer_id)
+        const customer = await Customer.findById(req.user.id)
         const productt = await Product.findById(productID)
         const existingProductIndex = customer.cart.items.findIndex(item => item.product._id.equals(productID))
         if(existingProductIndex == -1){
@@ -57,7 +57,7 @@ module.exports.DeleteFromCart = async (req, res) => {
 }
 module.exports.getCart = async (req, res) => {
     try{
-        const customer = await Customer.findById(req.user.customer_id).populate('cart.items.product').exec()
+        const customer = await Customer.findById(req.user.id).populate('cart.items.product').exec()
         if(!customer){
             throw new Error('Customer not found')
         }
