@@ -20,6 +20,7 @@ const AddressDetails = ({address, editAddress}) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
       };
+
       const handleSubmit = (e) => {
         if(locked) return
         e.preventDefault();
@@ -28,7 +29,7 @@ const AddressDetails = ({address, editAddress}) => {
       };
           
       return (
-        <div className="address-form-container">
+        <div className="form-container">
           {!address && <Alert spacing={2} severity="warning">You don't have an address... Please update your address to proceed with ordering.</Alert>}
           {address && <Alert severity="warning">To avoid any issues, please ensure the accuracy of this address before order.</Alert>}
           <form className='mt-2' onSubmit={handleSubmit}>
@@ -39,7 +40,7 @@ const AddressDetails = ({address, editAddress}) => {
                 type="text"
                 id="recipient_name"
                 name="recipient_name"
-                value={formData.recipient_name}
+                value={formData.recipient_name || ''}
                 onChange={handleChange}
                 required
               />
@@ -51,7 +52,7 @@ const AddressDetails = ({address, editAddress}) => {
                 type="text"
                 id="street_address"
                 name="street_address"
-                value={formData.street_address}
+                value={formData.street_address || ''}
                 onChange={handleChange}
                 required
               />
@@ -63,7 +64,7 @@ const AddressDetails = ({address, editAddress}) => {
                 type="text"
                 id="city"
                 name="city"
-                value={formData.city}
+                value={formData.city || ''}
                 onChange={handleChange}
                 required
               />
@@ -75,7 +76,7 @@ const AddressDetails = ({address, editAddress}) => {
                 type="text"
                 id="postal_code"
                 name="postal_code"
-                value={formData.postal_code}
+                value={formData.postal_code || ''}
                 onChange={handleChange}
                 required
               />
@@ -87,7 +88,7 @@ const AddressDetails = ({address, editAddress}) => {
                 type="text"
                 id="phone_number"
                 name="phone_number"
-                value={formData.phone_number}
+                value={formData.phone_number || ''}
                 onChange={handleChange}
                 required
               />
