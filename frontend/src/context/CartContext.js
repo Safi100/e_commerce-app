@@ -6,20 +6,18 @@ import Axios from 'axios';
 export const CartContext = createContext([]);
 
 export const CartContextProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    if(user && user.token) {
+    if(currentUser) {
       fetchCartData(); // Fetch cart data initially
     }
-  }, []);
+  }, [currentUser]);
 
   // Function to fetch cart data
   const fetchCartData = () => {
-    Axios.get('http://localhost:8000/cart', {
-      headers: { Authorization: "Bearer " + user.token }
-    })
+    Axios.get('http://localhost:8000/cart')
     .then(res => {
       let cartQuantity = 0
       res.data.items.forEach(item => {
@@ -35,10 +33,8 @@ export const CartContextProvider = ({ children }) => {
 
   // Function to add an item to the cart
   const addToCart = (productID, quantity=1 ) => {
-    if(user && user.token) {
-      Axios.post(`http://localhost:8000/cart/addToCart?quantity=${quantity}`, {productID} , {
-          headers: {authorization: "Bearer " + user.token}
-      })
+    if(currentUser) {
+      Axios.post(`http://localhost:8000/cart/addToCart?quantity=${quantity}`, {productID})
       .then(() => {
         // After adding the item to the cart, refetch the cart data to update the cart state
         fetchCartData();
@@ -52,9 +48,7 @@ export const CartContextProvider = ({ children }) => {
   };
 
   const removeFromCart = (productID, quantity=1 ) => {
-    Axios.delete(`http://localhost:8000/cart/deleteFromCart?quantity=${quantity}`, { data: { productID }, 
-      headers: {authorization: "Bearer " + user.token}
-    })
+    Axios.delete(`http://localhost:8000/cart/deleteFromCart?quantity=${quantity}`, { data: { productID }})
     .then(() => {
       // After adding the item to the cart, refetch the cart data to update the cart state
       fetchCartData();
