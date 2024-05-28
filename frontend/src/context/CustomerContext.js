@@ -5,20 +5,13 @@ import Axios from 'axios';
 // Create the CustomerContext with an initial value of an empty array
 export const CustomerContext = createContext([]);
 export const CustomerContextProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const [customer, setCustomer] = useState([]);
-
-  useEffect(() => {
-    if(user && user.token) {
-      fetchCustomerData(); // Fetch customer data initially
-    }
-  }, []);
 
   // Function to fetch customer data
   const fetchCustomerData = () => {
-    Axios.get('http://localhost:8000/user')
+    Axios.get('http://localhost:8000/user/renderProfile')
     .then(res => {
-      console.log(res.data);
       setCustomer(res.data);
     })
     .catch(err => {
@@ -40,7 +33,7 @@ export const CustomerContextProvider = ({ children }) => {
     const last_name = customer.last_name
     Axios.put('http://localhost:8000/user/editCustomerData', {first_name, last_name})
     .then(res => {
-      fetchCustomerData()
+      authContext.fetchCurrentUser();
     })
     .catch(err => {
       console.error("Error editing customer:", err); 
