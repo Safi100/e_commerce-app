@@ -7,6 +7,16 @@
     gap: 30px;
     padding-bottom: 30px;
 }
+.product_info .rating{ 
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.product_info .rating span{ 
+    display: flex;
+    align-items: center;
+}
 .thumbnails_cont{
     flex-basis: 60%;
     max-width: 540px;

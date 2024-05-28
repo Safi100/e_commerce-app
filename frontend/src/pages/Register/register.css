@@ -24,9 +24,6 @@
   display: flex;
   column-gap: 20px;
   row-gap: 15px;
-  /* grid-auto-flow: column; */
-  /* grid-template-columns: repeat(auto-fit, 250px); */
-  /* justify-content: center; */
   flex-wrap: wrap;
 }
 .reg_container .grid .input {
@@ -63,7 +60,6 @@
   padding: 15px;
   width: 100%;
   cursor: pointer;
-  /* max-width: 400px; */
 }
 .reg_container .RegBtn:hover{
   opacity: 0.7;
@@ -77,7 +73,7 @@
   color: red;
 }
 @media screen and (max-width: 544px) {
- .reg_container .grid .input {
+  .reg_container .grid .input {
     width: calc(100% / 1);
   }
 }

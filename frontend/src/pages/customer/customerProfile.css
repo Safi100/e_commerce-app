@@ -1,5 +1,6 @@
 .profileComponent{
     background: #f4f6f8;
+    flex: 1;
 }
 .customerProfile{
     padding: 30px 0;
@@ -9,6 +10,8 @@
     flex-direction: column;
     gap: 10px;
     padding: 0;
+    position: sticky;
+    top: 20px;
 }
 .customerProfile .list li {
     display: flex;
@@ -33,14 +36,14 @@
     /* max-width: 400px; */
     /* margin: 0 auto; */
 }
-.address-form-container .form-group {
+.form-container .form-group {
   margin-bottom: 15px;
 }
-.address-form-container label {
+.form-container label {
   display: block;
   font-weight: bold;
 }
-.address-form-container input[type="text"] {
+.form-container input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -48,7 +51,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.address-form-container button[type="submit"] {
+.form-container button[type="submit"] {
   background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
@@ -56,14 +59,14 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.address-form-container button[type="submit"]:hover {
+.form-container button[type="submit"]:hover {
   background-color: #0056b3;
 }
-.address-form-container .locked{
+.form-container .locked{
   cursor: pointer;
   color: blue;
 }
-.address-form-container input:disabled{
+.form-container input:disabled{
   background-color: #f2f2f2; /* Light gray background color */
   color: #888; /* Slightly muted text color */
 }
