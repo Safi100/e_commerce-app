@@ -30,6 +30,19 @@ module.exports.create_checkout_session = async (req, res, next) => {
             quantity: item.quantity,
         }));
 
+        if (DeliveryCost > 0) {
+            line_items.push({
+                price_data: {
+                    currency: "usd",
+                    product_data: {
+                        name: "Delivery",
+                    },
+                    unit_amount: DeliveryCost * 100,
+                },
+                quantity: 1,
+            });
+        }
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: line_items,
