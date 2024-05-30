@@ -10,6 +10,7 @@ import Login from "./pages/login/Login";
 import ForgetPass from "./pages/forget_pass/Forget_pass";
 import CustomerProfile from "./pages/customer/CustomerProfile";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
+import SuccessPaymentPage from "./pages/after_payment/Success";
 import axios from 'axios';
 
 function App() {
@@ -30,12 +31,13 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/my-account' element={<CustomerProfile />} />
+        <Route path='/success-payment' element={<SuccessPaymentPage />} />
         <Route path='/product-category/:category' element={<Products />} />
         <Route path='/product-profile/:id' element={<ProductProfile />} />
         <Route path='/reset-password/:UserID/:token' element={<ResetPassword/>} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
-      {!Hide && <Footer />}
+      {!Hide && path.pathname !== '/success-payment' && path.pathname !== '/failed-payment' && <Footer />}
     </div>
   );
 }
