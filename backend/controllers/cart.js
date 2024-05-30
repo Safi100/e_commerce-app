@@ -67,3 +67,15 @@ module.exports.getCart = async (req, res) => {
         console.log(e)
     }
 }
+module.exports.clearCart = async (req, res) => {
+    try{
+        const customer = await Customer.findById(req.user.id);
+        customer.cart.items = []
+        customer.cart.total = 0
+        await customer.save()
+        res.status(200).json({success : true, cart : customer.cart})
+    }catch(e){
+        res.status(500).json({error : e.message})
+        console.log(e)
+    }
+}
