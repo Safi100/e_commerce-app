@@ -134,7 +134,12 @@
     margin-top: 35px;
     padding: 30px 0;
 }
-.order_info .items_with_price{
+.order_info .price{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.order_info .price div{
     display: flex;
     justify-content: space-between;
     font-weight: 700;
@@ -156,6 +161,7 @@
     background: #5d50dd;
     border: 0;
     color: #fff;
+    min-height: 51.6px;
 }
 .check-out_btn button:hover{
     background-color: #5e50ddac;
