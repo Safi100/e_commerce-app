@@ -57,8 +57,15 @@ export const CartContextProvider = ({ children }) => {
         console.log(err);
     })
   }
+  const clearCart = () => {
+    Axios.delete('http://localhost:8000/cart/clear-cart')
+    .then(() => {
+      fetchCartData();
+    })
+    .catch(err => console.log(err))
+  }
   // Pass both cart state and addToCart function in the context value
-  const contextValue = { cart, addToCart, removeFromCart };
+  const contextValue = { cart, addToCart, removeFromCart, clearCart };
 
   return (
     <CartContext.Provider value={contextValue}>
