@@ -35,7 +35,7 @@ module.exports.create_checkout_session = async (req, res, next) => {
             line_items: line_items,
             mode: 'payment',
             success_url: `${process.env.BASE_URL}/success-payment`,
-            cancel_url: `${process.env.BASE_URL}/failed-payment`,
+            cancel_url: `${process.env.BASE_URL}/`,
         });
 
         res.status(200).json({id: session.id});
