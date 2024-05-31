@@ -1,15 +1,18 @@
-import {react, useContext} from 'react';
+import {react, useContext, useState} from 'react';
 import {CartContext} from '../../context/CartContext';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 
 const Item = ({item, index}) => {
+    const [itemQuantity, setItemQuantity] = useState(item.quantity);
     const cartContext = useContext(CartContext);
     const addOneToCart = (e) => {
+        setItemQuantity(itemQuantity + 1);
         cartContext.addToCart(item.product._id)
     }
     const removeOneFromCart = (e) => {
-        if(item.quantity > 1){
+        if(itemQuantity > 1){
+            setItemQuantity(itemQuantity - 1);
             cartContext.removeFromCart(item.product._id)
         }
     }
