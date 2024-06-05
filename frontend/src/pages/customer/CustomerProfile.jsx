@@ -7,6 +7,7 @@ import {CustomerContext} from '../../context/CustomerContext'
 import { AuthContext } from '../../context/AuthContext';
 import PersonalDetails from './CustomerComponents/PersonalDetails';
 import AddressDetails from './CustomerComponents/AddressDetails';
+import Orders from './CustomerComponents/Orders';
 import MyReviews from './CustomerComponents/MyReviews';
 import './customerProfile.css'
 
@@ -69,7 +70,7 @@ const CustomerProfile = () => {
                     <div className='SelectedComponent col-9'>
                         {selectedComponent === 1 && <PersonalDetails customerData={customerData.name} editCustomerData={editCustomerData}/>}
                         {selectedComponent === 2 && <AddressDetails address={customerData.address} editAddress={editAddress} />}
-                        {selectedComponent === 3 && <div>3</div>}
+                        {selectedComponent === 3 && <Orders />}
                         {selectedComponent === 4 && <MyReviews reviews={customer.reviews} />}
                     </div>
                 </div>
