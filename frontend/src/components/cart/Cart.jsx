@@ -36,7 +36,6 @@ const Cart = ({cart, setOpenCart, openCart}) => {
         if (result.error) {
             console.error(result.error.message);
         }
-        // cartContext.clearCart();
     }
 
     return (
@@ -48,7 +47,7 @@ const Cart = ({cart, setOpenCart, openCart}) => {
             {cart.cartQuantity > 0 && 
             <>
                 <div className='items_container'>
-                    <div className='cart_heading'><span className='cart_heading_title'>Shopping Cart</span> <span className='cart_items_count'>{`${cart.items.length} ${cart.items.length > 1 ? 'Items': 'Item'}`}</span></div>
+                    <div className='cart_heading'><span className='cart_heading_title'>Shopping Cart </span> <span className='cart_items_count'>{`${cart.items.length} ${cart.items.length > 1 ? 'Items': 'Item'}`}</span></div>
                     <div className='product_info_cont'>
                         <div className='products_row'>
                             {cart.items.map((item, index) => (
