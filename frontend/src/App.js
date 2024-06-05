@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      {!Hide && <Header />}
+      {!Hide && path.pathname !== '/success-payment' && <Header />}
       <Routes>
         <Route exact path='/' element={<Index/>} />
         <Route path='/forget-password' element={<ForgetPass/>} />
@@ -37,7 +37,7 @@ function App() {
         <Route path='/reset-password/:UserID/:token' element={<ResetPassword/>} />
         <Route path='*' element={<NotFound/>} />
       </Routes>
-      {!Hide && path.pathname !== '/success-payment' && path.pathname !== '/failed-payment' && <Footer />}
+      {!Hide && path.pathname !== '/success-payment' && <Footer />}
     </div>
   );
 }

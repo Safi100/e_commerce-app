@@ -17,7 +17,7 @@
 .success_payment p{
     color: #969798;
 }
-.success_payment .button{
+.success_payment_container .button{
     display: inline-block;
     background: #4CAF50;
     color: #fff;
