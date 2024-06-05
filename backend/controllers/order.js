@@ -103,6 +103,24 @@ module.exports.success_payment = async (req, res, next) => {
         
         res.json(order);
     } catch (e) {
-        res.status(500).send(e.message);
+        res.status(500).json({ error: e.message });
+    }
+}
+module.exports.fetch_orders = async (req, res, next) => {
+    try{
+        const orders = await Order.find({customer: req.user.id}).populate({path:'items.product', select: ['title', 'images']});
+        // Calculate the total price for each order
+        const ordersWithTotal = orders.map(order => {
+            let items_total = 0;
+            for(item of order.items) {
+                items_total += item.price_when_order * item.quantity;
+            }
+            const total_price = items_total + order.deliveryCost;
+            return { ...order.toObject(), total_price };
+        });
+        res.status(200).json(ordersWithTotal)
+    }catch(e){
+        console.log(e);
+        res.status(500).json({error: e.message})
     }
 }
