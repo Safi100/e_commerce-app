@@ -85,11 +85,6 @@
   display: flex;
   gap: 10px;
 }
-.order img{
-  width: 150px;
-  object-fit: cover;
-  object-position: center;
-}
 .order .address{
   position: absolute;
   top: 110%;
@@ -98,4 +93,22 @@
   border-radius: 5px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.3);
   padding: 10px;
+}
+.order .order_item_info{
+  
+}
+.order_item_info div{
+  width: 100%;
+}
+  .order_item_info img{
+  width: 150px;
+  object-fit: cover;
+  object-position: center;
+}
+@media screen and (max-width: 700px) {
+  .order .order_item_info{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 }

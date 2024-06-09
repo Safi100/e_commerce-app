@@ -59,7 +59,7 @@ const CustomerProfile = () => {
             <>
                 <h2 className='mb-5'>My Account</h2>
                 <div className='row gap-5'>
-                    <div className='col-2'>
+                    <div className='col-12 col-md-3'>
                         <ul className='list'>
                             <li className={selectedComponent === 1 ? 'selected' : ''} onClick={()=> setSelectedComponent(1)}><span><AccountCircleOutlinedIcon /></span> My details</li>
                             <li className={selectedComponent === 2 ? 'selected' : ''} onClick={()=> setSelectedComponent(2)}><span><FmdGoodOutlinedIcon /></span> My address</li>
@@ -67,7 +67,7 @@ const CustomerProfile = () => {
                             <li className={selectedComponent === 4 ? 'selected' : ''} onClick={()=> setSelectedComponent(4)}><span><ThumbsUpDownOutlinedIcon /></span> My reviews</li>
                         </ul>
                     </div>
-                    <div className='SelectedComponent col-9'>
+                    <div className='SelectedComponent col-12 col-md-8'>
                         {selectedComponent === 1 && <PersonalDetails customerData={customerData.name} editCustomerData={editCustomerData}/>}
                         {selectedComponent === 2 && <AddressDetails address={customerData.address} editAddress={editAddress} />}
                         {selectedComponent === 3 && <Orders />}

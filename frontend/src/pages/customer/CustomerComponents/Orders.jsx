@@ -12,7 +12,6 @@ const Orders = () => {
         .then(res => {
             setOrders(res.data)
             setLoading(false)
-            console.log(res.data);
         })
         .catch(err => {
             console.log(err);
@@ -67,7 +66,7 @@ const Orders = () => {
                         </div>
                         <div className='order_items card-body'>
                             {order.items.map(item => (
-                                <div className='d-flex gap-3'>
+                                <div className='d-flex order gap-4 order_item_info' key={item.product._id}>
                                     <a className='d-flex align-items-center' href={`/product-profile/${item.product._id}`}>
                                         <img src={item.product.images[0].url} alt={item.product._id} />
                                     </a>
