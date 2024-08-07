@@ -1,0 +1,15 @@
+# Base url
+BASE_URL=
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+# stripe
+SECRET_KEY=thisisnotsecure
+STRIPE_KEY=
+STRIPE_ENDPOINT_SECRET=
+# Database
+DATABASE=
+# nodemailer
+EMAIL_USER=
+PASS_USER=
