@@ -35,9 +35,9 @@ li{
   list-style: none;
 }
 .carousel-image{
-  max-height: 500px;
+  max-height: 525px;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   object-position: center;
 }
 .slick-prev, .slick-next{
