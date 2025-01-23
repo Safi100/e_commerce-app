@@ -111,9 +111,9 @@ module.exports.send_reset_mail = async (req, res) => {
         // if passwordCode exist delete it
         if(passwordToken) await passwordToken.deleteOne({CustomerId: customer._id});
         // generate a new password token
-        const NewPasswordToken = crypto.randomBytes(32).toString("hex");
+        const randomToken = crypto.randomBytes(32).toString("hex");
         // hash the new password token to secure it on database
-        const hashedToken = await bcrypt.hash(NewPasswordToken, 10);
+        const hashedToken = await bcrypt.hash(randomToken, 10);
         const newPasswordToken = new PasswordToken({
             CustomerId: customer._id,
             token: hashedToken
@@ -122,7 +122,7 @@ module.exports.send_reset_mail = async (req, res) => {
         // Send email to customer
         await sendEmail(customer.email, "Reset your password", `<p>Hi ${customer.email}</p>
         <p>Please click on the link below to reset your password</p>
-        <a href="http://localhost:3000/reset-password/${customer._id}/${newPasswordToken.token}">Reset Password</a>
+        <a href="http://localhost:3000/reset-password/${customer._id}/${randomToken}">Reset Password</a>
         <p>Link will expire in 1 hour.</p>
         <p>If you didn't request a password reset, please ignore this email, and your password will remain unchanged.</p>
         `)
@@ -144,7 +144,7 @@ module.exports.reset_password = async (req, res) => {
         if(!customer) throw new Error('Customer not found');
         const passwordResetToken = await PasswordToken.findOne({CustomerId: customer._id});
         if (!passwordResetToken) throw new Error(`Invalid link`);
-        const match = (token === passwordResetToken.token);
+        const match = await bcrypt.compare(token, passwordResetToken.token);
         if(!match) throw new Error(`Invalid link`);
         if (password.length < 6) throw new Error(`Password must be at least 6 characters.`);
         if (password !== confirmPassword) throw new Error(`Password and confirm password must match.`);
